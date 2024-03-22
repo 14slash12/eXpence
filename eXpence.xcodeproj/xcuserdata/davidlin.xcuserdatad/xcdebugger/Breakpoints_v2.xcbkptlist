@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CDFA297C-E04D-44EA-958E-7F5EDD9FCE2E"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "779DF39F-895D-43B1-AA33-79FABF64C6BC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = ""
+            moduleName = "">
+            <Locations>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6333EB9B-369D-47C5-8F9D-7717A6A82D0B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyExpenses/MainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D85B7DB4-82AD-4F26-B084-110DD02924EC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyExpenses/MainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
+            landmarkName = "filterDates()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyExpenses/MainView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
+            landmarkName = "selectedAmount"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - 3a4fb6a3605e40e8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
+                  moduleName = "MyExpenses"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "352"
+                  endingLineNumber = "352"
+                  offsetFromSymbolStart = "716">
+               </Location>
+               <Location
+                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - caa3000e3c37d27f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MyExpenses.AggregatedExpense) -&gt; Swift.Bool in MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
+                  moduleName = "MyExpenses"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "352"
+                  endingLineNumber = "352"
+                  offsetFromSymbolStart = "132">
+               </Location>
+               <Location
+                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - caa3000e3c37d27f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MyExpenses.AggregatedExpense) -&gt; Swift.Bool in MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
+                  moduleName = "MyExpenses"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "352"
+                  endingLineNumber = "352"
+                  offsetFromSymbolStart = "272">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
