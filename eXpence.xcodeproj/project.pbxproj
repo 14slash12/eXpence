@@ -12,9 +12,9 @@
 		1FA2640D2B9B9994000A46BE /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2640C2B9B9994000A46BE /* Expense.swift */; };
 		1FA2640F2B9B9998000A46BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA2640E2B9B9998000A46BE /* Assets.xcassets */; };
 		1FA264132B9B9998000A46BE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA264122B9B9998000A46BE /* Preview Assets.xcassets */; };
-		1FA2641D2B9B9999000A46BE /* MyExpensesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2641C2B9B9999000A46BE /* MyExpensesTests.swift */; };
-		1FA264272B9B9999000A46BE /* MyExpensesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264262B9B9999000A46BE /* MyExpensesUITests.swift */; };
-		1FA264292B9B9999000A46BE /* MyExpensesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264282B9B9999000A46BE /* MyExpensesUITestsLaunchTests.swift */; };
+		1FA2641D2B9B9999000A46BE /* eXpenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2641C2B9B9999000A46BE /* eXpenceTests.swift */; };
+		1FA264272B9B9999000A46BE /* eXpenceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264262B9B9999000A46BE /* eXpenceUITests.swift */; };
+		1FA264292B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264282B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift */; };
 		1FA264362B9B9C7F000A46BE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264352B9B9C7F000A46BE /* MainView.swift */; };
 		1FA264382B9BA3EB000A46BE /* Generalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264372B9BA3EB000A46BE /* Generalize.swift */; };
 /* End PBXBuildFile section */
@@ -38,17 +38,16 @@
 
 /* Begin PBXFileReference section */
 		1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialDate.swift; sourceTree = "<group>"; };
-		1FA264052B9B9994000A46BE /* MyExpenses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyExpenses.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA264052B9B9994000A46BE /* eXpence.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eXpence.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA264082B9B9994000A46BE /* eXpenceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceApp.swift; sourceTree = "<group>"; };
 		1FA2640C2B9B9994000A46BE /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1FA2640E2B9B9998000A46BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1FA264102B9B9998000A46BE /* MyExpenses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyExpenses.entitlements; sourceTree = "<group>"; };
 		1FA264122B9B9998000A46BE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		1FA264182B9B9999000A46BE /* MyExpensesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyExpensesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FA2641C2B9B9999000A46BE /* MyExpensesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExpensesTests.swift; sourceTree = "<group>"; };
-		1FA264222B9B9999000A46BE /* MyExpensesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyExpensesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FA264262B9B9999000A46BE /* MyExpensesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExpensesUITests.swift; sourceTree = "<group>"; };
-		1FA264282B9B9999000A46BE /* MyExpensesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExpensesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1FA264182B9B9999000A46BE /* eXpenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eXpenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA2641C2B9B9999000A46BE /* eXpenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceTests.swift; sourceTree = "<group>"; };
+		1FA264222B9B9999000A46BE /* eXpenceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eXpenceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA264262B9B9999000A46BE /* eXpenceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceUITests.swift; sourceTree = "<group>"; };
+		1FA264282B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1FA264352B9B9C7F000A46BE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1FA264372B9BA3EB000A46BE /* Generalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalize.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,9 +80,9 @@
 		1FA263FC2B9B9993000A46BE = {
 			isa = PBXGroup;
 			children = (
-				1FA264072B9B9994000A46BE /* MyExpenses */,
-				1FA2641B2B9B9999000A46BE /* MyExpensesTests */,
-				1FA264252B9B9999000A46BE /* MyExpensesUITests */,
+				1FA264072B9B9994000A46BE /* eXpence */,
+				1FA2641B2B9B9999000A46BE /* eXpenceTests */,
+				1FA264252B9B9999000A46BE /* eXpenceUITests */,
 				1FA264062B9B9994000A46BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,26 +90,25 @@
 		1FA264062B9B9994000A46BE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1FA264052B9B9994000A46BE /* MyExpenses.app */,
-				1FA264182B9B9999000A46BE /* MyExpensesTests.xctest */,
-				1FA264222B9B9999000A46BE /* MyExpensesUITests.xctest */,
+				1FA264052B9B9994000A46BE /* eXpence.app */,
+				1FA264182B9B9999000A46BE /* eXpenceTests.xctest */,
+				1FA264222B9B9999000A46BE /* eXpenceUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1FA264072B9B9994000A46BE /* MyExpenses */ = {
+		1FA264072B9B9994000A46BE /* eXpence */ = {
 			isa = PBXGroup;
 			children = (
 				1FA264082B9B9994000A46BE /* eXpenceApp.swift */,
 				1FA2640C2B9B9994000A46BE /* Expense.swift */,
 				1FA2640E2B9B9998000A46BE /* Assets.xcassets */,
-				1FA264102B9B9998000A46BE /* MyExpenses.entitlements */,
 				1FA264112B9B9998000A46BE /* Preview Content */,
 				1FA264352B9B9C7F000A46BE /* MainView.swift */,
 				1FA264372B9BA3EB000A46BE /* Generalize.swift */,
 				1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */,
 			);
-			path = MyExpenses;
+			path = eXpence;
 			sourceTree = "<group>";
 		};
 		1FA264112B9B9998000A46BE /* Preview Content */ = {
@@ -121,29 +119,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		1FA2641B2B9B9999000A46BE /* MyExpensesTests */ = {
+		1FA2641B2B9B9999000A46BE /* eXpenceTests */ = {
 			isa = PBXGroup;
 			children = (
-				1FA2641C2B9B9999000A46BE /* MyExpensesTests.swift */,
+				1FA2641C2B9B9999000A46BE /* eXpenceTests.swift */,
 			);
-			path = MyExpensesTests;
+			path = eXpenceTests;
 			sourceTree = "<group>";
 		};
-		1FA264252B9B9999000A46BE /* MyExpensesUITests */ = {
+		1FA264252B9B9999000A46BE /* eXpenceUITests */ = {
 			isa = PBXGroup;
 			children = (
-				1FA264262B9B9999000A46BE /* MyExpensesUITests.swift */,
-				1FA264282B9B9999000A46BE /* MyExpensesUITestsLaunchTests.swift */,
+				1FA264262B9B9999000A46BE /* eXpenceUITests.swift */,
+				1FA264282B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift */,
 			);
-			path = MyExpensesUITests;
+			path = eXpenceUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1FA264042B9B9994000A46BE /* MyExpenses */ = {
+		1FA264042B9B9994000A46BE /* eXpence */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FA2642C2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpenses" */;
+			buildConfigurationList = 1FA2642C2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpence" */;
 			buildPhases = (
 				1FA264012B9B9994000A46BE /* Sources */,
 				1FA264022B9B9994000A46BE /* Frameworks */,
@@ -153,14 +151,14 @@
 			);
 			dependencies = (
 			);
-			name = MyExpenses;
+			name = eXpence;
 			productName = MyExpenses;
-			productReference = 1FA264052B9B9994000A46BE /* MyExpenses.app */;
+			productReference = 1FA264052B9B9994000A46BE /* eXpence.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1FA264172B9B9999000A46BE /* MyExpensesTests */ = {
+		1FA264172B9B9999000A46BE /* eXpenceTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FA2642F2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpensesTests" */;
+			buildConfigurationList = 1FA2642F2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpenceTests" */;
 			buildPhases = (
 				1FA264142B9B9999000A46BE /* Sources */,
 				1FA264152B9B9999000A46BE /* Frameworks */,
@@ -171,14 +169,14 @@
 			dependencies = (
 				1FA2641A2B9B9999000A46BE /* PBXTargetDependency */,
 			);
-			name = MyExpensesTests;
+			name = eXpenceTests;
 			productName = MyExpensesTests;
-			productReference = 1FA264182B9B9999000A46BE /* MyExpensesTests.xctest */;
+			productReference = 1FA264182B9B9999000A46BE /* eXpenceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		1FA264212B9B9999000A46BE /* MyExpensesUITests */ = {
+		1FA264212B9B9999000A46BE /* eXpenceUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FA264322B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpensesUITests" */;
+			buildConfigurationList = 1FA264322B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpenceUITests" */;
 			buildPhases = (
 				1FA2641E2B9B9999000A46BE /* Sources */,
 				1FA2641F2B9B9999000A46BE /* Frameworks */,
@@ -189,9 +187,9 @@
 			dependencies = (
 				1FA264242B9B9999000A46BE /* PBXTargetDependency */,
 			);
-			name = MyExpensesUITests;
+			name = eXpenceUITests;
 			productName = MyExpensesUITests;
-			productReference = 1FA264222B9B9999000A46BE /* MyExpensesUITests.xctest */;
+			productReference = 1FA264222B9B9999000A46BE /* eXpenceUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -217,7 +215,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1FA264002B9B9994000A46BE /* Build configuration list for PBXProject "MyExpenses" */;
+			buildConfigurationList = 1FA264002B9B9994000A46BE /* Build configuration list for PBXProject "eXpence" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -230,9 +228,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1FA264042B9B9994000A46BE /* MyExpenses */,
-				1FA264172B9B9999000A46BE /* MyExpensesTests */,
-				1FA264212B9B9999000A46BE /* MyExpensesUITests */,
+				1FA264042B9B9994000A46BE /* eXpence */,
+				1FA264172B9B9999000A46BE /* eXpenceTests */,
+				1FA264212B9B9999000A46BE /* eXpenceUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -280,7 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA2641D2B9B9999000A46BE /* MyExpensesTests.swift in Sources */,
+				1FA2641D2B9B9999000A46BE /* eXpenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,8 +286,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA264272B9B9999000A46BE /* MyExpensesUITests.swift in Sources */,
-				1FA264292B9B9999000A46BE /* MyExpensesUITestsLaunchTests.swift in Sources */,
+				1FA264272B9B9999000A46BE /* eXpenceUITests.swift in Sources */,
+				1FA264292B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,12 +296,12 @@
 /* Begin PBXTargetDependency section */
 		1FA2641A2B9B9999000A46BE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1FA264042B9B9994000A46BE /* MyExpenses */;
+			target = 1FA264042B9B9994000A46BE /* eXpence */;
 			targetProxy = 1FA264192B9B9999000A46BE /* PBXContainerItemProxy */;
 		};
 		1FA264242B9B9999000A46BE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1FA264042B9B9994000A46BE /* MyExpenses */;
+			target = 1FA264042B9B9994000A46BE /* eXpence */;
 			targetProxy = 1FA264232B9B9999000A46BE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -428,10 +426,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MyExpenses/MyExpenses.entitlements;
+				CODE_SIGN_ENTITLEMENTS = eXpence/eXpence.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MyExpenses/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"eXpence/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -466,10 +465,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MyExpenses/MyExpenses.entitlements;
+				CODE_SIGN_ENTITLEMENTS = eXpence/eXpence.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MyExpenses/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"eXpence/Preview Content\"";
 				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -518,7 +518,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyExpenses.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyExpenses";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eXpence.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eXpence";
 			};
 			name = Debug;
 		};
@@ -541,7 +541,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyExpenses.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyExpenses";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eXpence.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eXpence";
 			};
 			name = Release;
 		};
@@ -592,7 +592,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1FA264002B9B9994000A46BE /* Build configuration list for PBXProject "MyExpenses" */ = {
+		1FA264002B9B9994000A46BE /* Build configuration list for PBXProject "eXpence" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FA2642A2B9B9999000A46BE /* Debug */,
@@ -601,7 +601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1FA2642C2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpenses" */ = {
+		1FA2642C2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpence" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FA2642D2B9B9999000A46BE /* Debug */,
@@ -610,7 +610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1FA2642F2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpensesTests" */ = {
+		1FA2642F2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpenceTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FA264302B9B9999000A46BE /* Debug */,
@@ -619,7 +619,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1FA264322B9B9999000A46BE /* Build configuration list for PBXNativeTarget "MyExpensesUITests" */ = {
+		1FA264322B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpenceUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FA264332B9B9999000A46BE /* Debug */,

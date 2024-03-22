@@ -370,11 +370,35 @@ struct ChartView: View {
     
     @Binding var specialDate: SpecialDate
     @State private var selectedExpense: Date?
+    
+    private var aggregatedExpenses: [AggregatedExpense] {
+        if specialDate.type == .day || specialDate.type == .week {
+            return aggregateWeekly()
+        } else {
+            return aggregateMonthly()
+        }
+    }
+    
+    @State private var showPreview: Bool = true
+
     private var selectedAmount: Double? {
         guard let selectedExpense else { return nil }
 
-        return aggregateMonthly().first(where: {$0.timestamp == Calendar.current.startOfDay(for: selectedExpense)})?.amount
+        return aggregatedExpenses.first(where: {$0.timestamp == Calendar.current.startOfDay(for: selectedExpense)})?.amount
     }
+
+    private var xAxisCount: Int {
+        switch specialDate.type {
+        case .day:
+            return 7
+        case .week:
+            return 7
+        case .month:
+            return 7
+        }
+    }
+
+    private var unit: Calendar.Component = .hour
 
     init(filter: Predicate<Expense> = #Predicate { _ in true}, sort: SortDescriptor<Expense>, specialDate: Binding<SpecialDate>) {
         _expenses = Query(filter: filter, sort: [sort])
@@ -404,25 +428,30 @@ struct ChartView: View {
         )
 
     var body: some View {
-        Chart(aggregateMonthly()) {
+        Chart(aggregatedExpenses) {
             AreaMark(x: .value("Date", $0.timestamp), y:
-                .value("Amount", $0.amount))
+                    .value("Amount", $0.amount))
             .interpolationMethod(.monotone)
             .foregroundStyle(colorScheme == .light ? lightGradient : darkGradient)
-
-
-
-            LineMark(
-                x: .value("Date", $0.timestamp),
-                y: .value("Amount", $0.amount)
-            )
-            .interpolationMethod(.monotone)
-            .symbol(.circle)
             
+            if case .month = specialDate.type {
+                LineMark(
+                    x: .value("Date", $0.timestamp),
+                    y: .value("Amount", $0.amount)
+                )
+                .interpolationMethod(.monotone)
+            } else {
+                LineMark(
+                    x: .value("Date", $0.timestamp),
+                    y: .value("Amount", $0.amount)
+                )
+                .interpolationMethod(.monotone)
+                .symbol(.circle)
+            }
+
 
             if let selectedExpense {
-
-                RectangleMark(x: .value("Day", selectedExpense, unit: .hour))
+                RectangleMark(x: .value("Unit", selectedExpense, unit: unit))
                     .foregroundStyle(.primary.opacity(0.2))
                     .annotation(position: .trailing, spacing: 0, overflowResolution: .init(x: .fit(to: .chart))) {
                         VStack {
@@ -438,17 +467,15 @@ struct ChartView: View {
                         .background {
                             RoundedRectangle(cornerRadius: .myCornerRadius/2)
                                 .foregroundStyle(.white)
-                                .shadow(radius: 4)
                                 .padding()
                         }
                     }
             }
-
         }
-        .chartXScale(domain: (aggregateMonthly().map { $0.timestamp}.min() ?? Date())...(aggregateMonthly().map { $0.timestamp}.max() ?? Date()))
+        .chartXScale(domain: (aggregatedExpenses.map { $0.timestamp }.min() ?? Date())...(aggregatedExpenses.map { $0.timestamp}.max() ?? Date()))
         .chartXSelection(value: $selectedExpense)
         .chartXAxis {
-            AxisMarks(preset: .aligned, values: .automatic(desiredCount: 7)) {
+            AxisMarks(preset: .aligned, values: .automatic(desiredCount: xAxisCount)) {
                 let value = $0.as(Date.self)!
                 AxisValueLabel(K.dateFormatter2.string(from: value), verticalSpacing: 20)
                     .foregroundStyle(Color(.lightGray))
@@ -459,16 +486,36 @@ struct ChartView: View {
                 let value = $0.as(Double.self)!
                 AxisValueLabel(K.currencyFormatter.string(from: value as NSNumber)!, horizontalSpacing: 20)
                     .foregroundStyle(Color(.lightGray))
-
             }
-        }
-        .onAppear {
-            aggregateMonthly()
-                .forEach { print(">> \($0.amount) + \($0.timestamp)") }
         }
     }
 
     private func aggregateMonthly() -> [AggregatedExpense] {
+        let end = Calendar.current.date(byAdding: .minute, value: -1, to: specialDate.date.endOfMonth)!
+        let endDay = Calendar.current.dateComponents([.day], from: end).day!
+        print("end \(end)")
+        print(endDay)
+        print(specialDate.date.startOfMonth)
+
+        let weeksPerMonth = (0...endDay-1).map { Calendar(identifier: .iso8601).date(byAdding: .day, value: $0, to: specialDate.date.startOfMonth)! }
+
+        let aggregatedExpenses = expenses.reduce(into: [Date: Double]()) { partialResult, expense in
+            let currentAmount: Double = partialResult[expense.timestamp.startOfDay] ?? 0.0
+            partialResult[expense.timestamp.startOfDay] = currentAmount + expense.amount
+        }
+
+        return weeksPerMonth.map { week in
+            if let amount = aggregatedExpenses[week] {
+                AggregatedExpense(timestamp: week, amount: amount)
+            } else {
+                AggregatedExpense(timestamp: week, amount: 0.0)
+            }
+        }
+        .sorted { $0.timestamp < $1.timestamp }
+
+    }
+
+    private func aggregateWeekly() -> [AggregatedExpense] {
         let weekDays = (0...6).map { Calendar(identifier: .iso8601).date(byAdding: .day, value: $0, to: specialDate.date.startOfWeek ?? Date())! }
 
         let aggregatedExpenses = expenses.reduce(into: [Date: Double]()) { partialResult, expense in
@@ -485,6 +532,30 @@ struct ChartView: View {
         }
         .sorted { $0.timestamp < $1.timestamp }
 
+    }
+
+    private func aggregatePreview() -> [AggregatedExpense] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let start = formatter.date(from: "20204/03/22 00:00")!
+
+        let day1 = start.startOfWeek!.startOfDay
+        let day2 = Calendar.current.date(byAdding: .day, value: 1, to: day1)!
+        let day3 = Calendar.current.date(byAdding: .day, value: 2, to: day1)!
+        let day4 = Calendar.current.date(byAdding: .day, value: 3, to: day1)!
+        let day5 = Calendar.current.date(byAdding: .day, value: 4, to: day1)!
+        let day6 = Calendar.current.date(byAdding: .day, value: 5, to: day1)!
+        let day7 = Calendar.current.date(byAdding: .day, value: 6, to: day1)!
+
+        return [
+            AggregatedExpense(timestamp: day1, amount: 0.0),
+            AggregatedExpense(timestamp: day2, amount: 40.0),
+            AggregatedExpense(timestamp: day3, amount: 10.0),
+            AggregatedExpense(timestamp: day4, amount: 30.0),
+            AggregatedExpense(timestamp: day5, amount: 20.0),
+            AggregatedExpense(timestamp: day6, amount: 40.0),
+            AggregatedExpense(timestamp: day7, amount: 40.0)
+        ]
     }
 }
 
@@ -520,8 +591,11 @@ struct DataView: View {
 
     private func filterDates() {
         guard let weekPredicate = filterInterval(from: specialDate.date, by: .week), let monthPredicate = filterInterval(from: specialDate.date, by: .month) else { return }
-        weekFilter = weekPredicate
-        monthFilter = monthPredicate
+        if specialDate.type == .week || specialDate.type == .day {
+            weekFilter = weekPredicate
+        } else {
+            weekFilter = monthPredicate
+        }
     }
 
     private func filterInterval(from input: Date, by type: DateType) -> Predicate<Expense>? {
