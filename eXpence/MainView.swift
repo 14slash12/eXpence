@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Charts
+import WidgetKit
 
 struct ExpenseView: View {
     let expense: Expense
@@ -354,6 +355,18 @@ struct DateAdjustView: View {
     }
 }
 
+struct SettingsView: View {
+    var body: some View {
+        VStack {
+            Text("Settings")
+            Text("Current Status: Free")
+            Button("Restore Purchase") {
+                // Restore
+            }
+        }
+    }
+}
+
 struct AggregatedExpense: Identifiable {
     var id: Date {
         return timestamp
@@ -379,7 +392,10 @@ struct ChartView: View {
         }
     }
     
-    @State private var showPreview: Bool = true
+    private var showPreview: Bool {
+        aggregatedExpenses.reduce(into: 0.0, { partialResult, expenses in
+            partialResult = partialResult + expenses.amount } ) == 0.0
+    }
 
     private var selectedAmount: Double? {
         guard let selectedExpense else { return nil }
@@ -428,12 +444,24 @@ struct ChartView: View {
         )
 
     var body: some View {
+        if showPreview {
+            ZStack {
+                chart(aggregatePreview())
+                    .blur(radius: .myCornerRadius/4)
+                Text("Great! You have no expenses 🎉")
+            }
+        } else {
+            chart(aggregatedExpenses)
+        }
+    }
+
+    private func chart(_ aggregatedExpenses: [AggregatedExpense]) -> some View {
         Chart(aggregatedExpenses) {
             AreaMark(x: .value("Date", $0.timestamp), y:
                     .value("Amount", $0.amount))
             .interpolationMethod(.monotone)
             .foregroundStyle(colorScheme == .light ? lightGradient : darkGradient)
-            
+
             if case .month = specialDate.type {
                 LineMark(
                     x: .value("Date", $0.timestamp),
@@ -488,6 +516,7 @@ struct ChartView: View {
                     .foregroundStyle(Color(.lightGray))
             }
         }
+        .foregroundStyle(.purple)
     }
 
     private func aggregateMonthly() -> [AggregatedExpense] {
@@ -572,8 +601,6 @@ struct DataView: View {
 //            HStack {
             ChartView(filter: weekFilter, sort: sort, specialDate: $specialDate )
                 .padding()
-
-                .foregroundStyle(.purple)
                 .frame(width: .myLarge1*7, height: .myLarge1*4)
 //                .containerRelativeFrame(.horizontal)
 //        }.scrollTargetBehavior(.paging)
@@ -637,6 +664,7 @@ struct DataView: View {
 struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.scenePhase) var scenePhase
     @Query var categories: [ExpenseCategory]
 
     @State var editExpense: Expense? = nil
@@ -749,6 +777,12 @@ struct MainView: View {
             self.date = editExpense.timestamp
             self.category = editExpense.category
 
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .background {
+                print("background")
+                WidgetCenter.shared.reloadAllTimelines()
+            }
         }
     }
 

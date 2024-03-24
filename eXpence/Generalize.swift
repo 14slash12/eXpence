@@ -162,7 +162,7 @@ enum K {
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        formatter.timeStyle = .short
+        formatter.timeStyle = .none
         formatter.locale = .current
         return formatter
     }
