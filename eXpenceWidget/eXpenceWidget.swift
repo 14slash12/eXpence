@@ -59,7 +59,7 @@ struct eXpenceWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
 
     var entry: Provider.Entry
-    let specialDate = SpecialDate(date: .now, type: .week)
+    let specialDate: SpecialDate
 
     var body: some View {
         VStack {
@@ -75,9 +75,12 @@ struct eXpenceWidgetEntryView : View {
     }
 
     private var sumText: String {
-        let sum = entry.expenses.reduce(0.0) { $0 + $1.amount }
+        let currentExpensesPredicate = filterInterval(from: .now, by: specialDate.type)!
+        let currentExpenses = try? entry.expenses.filter(currentExpensesPredicate)
+        let currentExpensesSum = currentExpenses?.reduce(0.0) {$0 + $1.amount}
 
-        return K.currencyFormatter.string(from: sum as NSNumber) ?? "-"
+        guard let currentExpensesSum else { return "-" }
+        return K.currencyFormatter.string(from: currentExpensesSum as NSNumber) ?? "-"
     }
 
     enum RelativeIndicator {
@@ -93,7 +96,7 @@ struct eXpenceWidgetEntryView : View {
                     colorScheme == .light ? Color.black : Color.white
 
                     VStack(alignment: .leading) {
-                        Text("This week")
+                        Text(specialDate.type == .week ? "This week" : "This month")
                             .foregroundStyle(Color(.lightGray))
 
                         Text(sumText)
@@ -137,12 +140,17 @@ struct eXpenceWidgetEntryView : View {
 
         // If the total spending decreased to the last day, week or month depending on what is currently shown to the user (i.e. in specialDate.type)
         var decreasedToLast: RelativeIndicator {
-            let predicate = filterByDate()!
-            let lastExpenses = try? entry.expenses.filter(predicate)
+            let lastExpensesPredicate = filterInterval(from: specialDate.type == .week ? Calendar.current.date(byAdding: .weekOfYear, value: 1, to: Date())! : Calendar.current.date(byAdding: .month, value: 1, to: Date())!, by: specialDate.type)!
+            let currentExpensesPredicate = filterInterval(from: .now, by: specialDate.type)!
+
+            let lastExpenses = try? entry.expenses.filter(lastExpensesPredicate)
             let lastExpensesSum = lastExpenses?.reduce(0.0) {$0 + $1.amount}
-            let currentExpensesSum = entry.expenses.reduce(0.0) {$0 + $1.amount}
-            
-            guard let lastExpensesSum else { return .neutral }
+            let currentExpenses = try? entry.expenses.filter(currentExpensesPredicate)
+            let currentExpensesSum = currentExpenses?.reduce(0.0) {$0 + $1.amount}
+
+            guard let lastExpensesSum, let currentExpensesSum else {
+                return .neutral
+            }
 
             print(lastExpensesSum)
             print(currentExpensesSum)
@@ -155,41 +163,39 @@ struct eXpenceWidgetEntryView : View {
             }
         }
 
-        func filterByDate() -> Predicate<Expense>? {
-            var start: Date
-            var end: Date
+    private func filterInterval(from input: Date, by type: DateType) -> Predicate<Expense>? {
+        var start: Date
+        var end: Date
 
-            switch specialDate.type {
-            case .day:
-                guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: specialDate.date) else { return nil }
-                start = Calendar.current.startOfDay(for: yesterday)
-                guard let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: start) else {
-                    return nil
-                }
-                end = endOfDay
+        switch type {
+        case .day:
+            start = Calendar.current.startOfDay(for: input)
+            guard let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: start) else {
+                return nil
+            }
+            end = endOfDay
 
-            case .week:
-                let lastWeek = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: specialDate.date)
-
-                guard let startOfWeek = lastWeek?.startOfWeek, let endOfWeek = lastWeek?.endOfWeek else {
-                    return nil
-                }
-
-                start = startOfWeek
-                end = endOfWeek
-
-            case .month:
-
-                guard let lastMonth = Calendar.current.date(byAdding: .month, value: -1, to: specialDate.date) else { return nil }
-
-                start = lastMonth.startOfMonth
-                end = lastMonth.endOfMonth
+        case .week:
+            guard let startOfWeek = input.startOfWeek, let endOfWeek = input.endOfWeek else {
+                return nil
             }
 
-            return #Predicate<Expense> { expense in
-                return expense.timestamp <= end && expense.timestamp >= start
-            }
+            start = startOfWeek
+            end = endOfWeek
+
+            print(start)
+            print(end)
+
+        case .month:
+            start = input.startOfMonth
+            end = input.endOfMonth
         }
+
+
+        return #Predicate<Expense> { expense in
+            return expense.timestamp < end && expense.timestamp >= start
+        }
+    }
 
     private func aggregateWeekly() -> [AggregatedExpense] {
         let weekDays = (0...6).map { Calendar(identifier: .iso8601).date(byAdding: .day, value: $0, to: specialDate.date.startOfWeek ?? Date())! }
@@ -217,15 +223,35 @@ struct eXpenceWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
-                eXpenceWidgetEntryView(entry: entry)
+                eXpenceWidgetEntryView(entry: entry, specialDate: SpecialDate(date: .now, type: .week))
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
-                eXpenceWidgetEntryView(entry: entry)
+                eXpenceWidgetEntryView(entry: entry, specialDate: SpecialDate(date: .now, type: .week))
                     .padding()
                     .background()
             }
         }
         .configurationDisplayName("My Widget")
+        .description("This is an example widget.")
+        .contentMarginsDisabled()
+    }
+}
+
+struct eXpenceMonthlyWidget: Widget {
+    let kind: String = "eXpenceWidget2"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            if #available(iOS 17.0, *) {
+                eXpenceWidgetEntryView(entry: entry, specialDate: SpecialDate(date: .now, type: .month))
+                    .containerBackground(.fill.tertiary, for: .widget)
+            } else {
+                eXpenceWidgetEntryView(entry: entry, specialDate: SpecialDate(date: .now, type: .month))
+                    .padding()
+                    .background()
+            }
+        }
+        .configurationDisplayName("NEW")
         .description("This is an example widget.")
         .contentMarginsDisabled()
     }

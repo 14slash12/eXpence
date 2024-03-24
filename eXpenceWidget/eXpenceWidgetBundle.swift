@@ -10,7 +10,10 @@ import SwiftUI
 
 @main
 struct eXpenceWidgetBundle: WidgetBundle {
+
+    @WidgetBundleBuilder
     var body: some Widget {
         eXpenceWidget()
+        eXpenceMonthlyWidget()
     }
 }
