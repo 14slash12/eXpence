@@ -360,14 +360,33 @@ struct DateAdjustView: View {
 }
 
 struct SettingsView: View {
+    @Environment(\.dismiss) var dismiss
+
     var body: some View {
         VStack {
+            HStack {
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    ZStack {
+                        Circle()
+                            .foregroundStyle(.ultraThinMaterial)
+                            .frame(width: .myLarge1)
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.gray)
+                    }
+                }
+
+            }
             Text("Settings")
             Text("Current Status: Free")
             Button("Restore Purchase") {
                 // Restore
             }
+            Spacer()
         }
+        .padding()
     }
 }
 
@@ -674,6 +693,8 @@ struct MainView: View {
     @State var specialDate = SpecialDate(date: Date(), type: .week)
     @State var showAddView: Bool = false
     @State var showDataView: Bool = true
+    @FocusState var isNameFocused:Bool
+    @State var showSettings: Bool = false
 
     enum Page {
         case list
@@ -779,6 +800,14 @@ struct MainView: View {
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
+        .onChange(of: isNameFocused) {
+            withAnimation(.snappy) {
+                showDataView.toggle()
+            }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
     }
 
     private func reset() {
@@ -791,6 +820,7 @@ struct MainView: View {
     private func cancelButton() -> some View {
         Button {
             withAnimation {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 showAddView = false
                 editExpense = nil
             }
@@ -809,6 +839,7 @@ struct MainView: View {
     private func saveButton() -> some View {
         Button {
             withAnimation {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 addItem()
                 showAddView = false
                 editExpense = nil
@@ -891,22 +922,38 @@ struct MainView: View {
             Spacer()
 
             Button {
-                withAnimation {
-                    showDataView.toggle()
-                }
+                showSettings.toggle()
             } label: {
-                HStack {
-                    Text(showDataView ? "Hide" : "Show")
-                    Image(systemName: showDataView ? "arrowtriangle.down.fill" : "arrowtriangle.left.fill")
-                }
-                .foregroundStyle(Color(.lightGray))
-                .padding(.myLarge1/5)
-                .background {
-                    RoundedRectangle(cornerRadius: .myCornerRadius*2)
-                        .foregroundStyle(.gray.opacity(0.1))
+                ZStack {
+                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                        .foregroundStyle(Color(.tertiary))
+                        .opacity(0.25)
+                        .frame(width: .myLarge1, height: .myLarge1)
+                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                    Image(systemName: "gear")
                 }
             }
-            .padding()
+            .padding([.trailing])
+
+
+
+//            Button {
+//                withAnimation {
+//                    showDataView.toggle()
+//                }
+//            } label: {
+//                HStack {
+//                    Text(showDataView ? "Hide" : "Show")
+//                    Image(systemName: showDataView ? "arrowtriangle.down.fill" : "arrowtriangle.left.fill")
+//                }
+//                .foregroundStyle(Color(.lightGray))
+//                .padding(.myLarge1/5)
+//                .background {
+//                    RoundedRectangle(cornerRadius: .myCornerRadius*2)
+//                        .foregroundStyle(.gray.opacity(0.1))
+//                }
+//            }
+//            .padding()
         }
     }
 
@@ -924,6 +971,8 @@ struct MainView: View {
                             .foregroundStyle(Color(.lightGray))
                             .opacity(0.25)
                     }
+                    .focused($isNameFocused)
+                    .submitLabel(.done)
             }
             .padding([.bottom], 5.0)
             HStack {
@@ -938,6 +987,8 @@ struct MainView: View {
                             .foregroundStyle(Color(.lightGray))
                             .opacity(0.25)
                     }
+                    .focused($isNameFocused)
+                    .submitLabel(.done)
             }
             .padding([.bottom], 5.0)
 
