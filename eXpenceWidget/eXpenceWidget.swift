@@ -39,12 +39,11 @@ struct Provider: TimelineProvider {
     }
 
     @MainActor 
-    func fetch(for descriptor: FetchDescriptor<Expense> = FetchDescriptor<Expense>(predicate: #Predicate<Expense> {_ in true})) -> [Expense] {
+    func fetch() -> [Expense] {
         
         guard let modelContainer = try? ModelContainer(for: Expense.self) else { return []
         }
-        let descriptor = FetchDescriptor<Expense> (predicate: #Predicate { expense in
-        true })
+        let descriptor = FetchDescriptor<Expense>()
         let expenses = try? modelContainer.mainContext.fetch(descriptor)
         return expenses ?? []
     }
@@ -231,14 +230,14 @@ struct eXpenceWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Weekly")
+        .description("Shows total weekly expenses.")
         .contentMarginsDisabled()
     }
 }
 
 struct eXpenceMonthlyWidget: Widget {
-    let kind: String = "eXpenceWidget2"
+    let kind: String = "eXpenceWidgetMonthly"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
@@ -251,10 +250,29 @@ struct eXpenceMonthlyWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("NEW")
-        .description("This is an example widget.")
+        .configurationDisplayName("Monthly")
+        .description("Shows total monthly expenses.")
         .contentMarginsDisabled()
     }
+}
+
+
+// Do not delete this preview -> idk why but otherwise the preview will result in an error
+struct CountdownsWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        let modelContainer = try! ModelContainer(for: Expense.self)
+        eXpenceWidgetEntryView(entry: SimpleEntry(date: .now, expenses: [Expense(name: "Rewe", amount: 20.0, timestamp: Date(), category: nil)]), specialDate: SpecialDate(date: .now, type: .month))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .modelContainer(modelContainer)
+            .containerBackground(.fill.tertiary, for: .widget)
+
+    }
+}
+
+#Preview(as: .systemSmall) {
+    eXpenceMonthlyWidget()
+} timeline: {
+    SimpleEntry(date: .now, expenses: [Expense(name: "Rewe", amount: 20.0, timestamp: Date(), category: nil)])
 }
 
 #Preview(as: .systemSmall) {
