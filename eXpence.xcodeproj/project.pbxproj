@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F90767F2B9C8A4F00ECF8A7 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
+		1F945A832BAFDB6200103A53 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
 		1FA264092B9B9994000A46BE /* eXpenceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264082B9B9994000A46BE /* eXpenceApp.swift */; };
 		1FA2640D2B9B9994000A46BE /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2640C2B9B9994000A46BE /* Expense.swift */; };
 		1FA2640F2B9B9998000A46BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA2640E2B9B9998000A46BE /* Assets.xcassets */; };
@@ -406,6 +407,7 @@
 				1FF1D3932BAF533900BA17A0 /* eXpenceWidget.swift in Sources */,
 				1FF1D3A32BAF611200BA17A0 /* Context.swift in Sources */,
 				1FF1D3912BAF533900BA17A0 /* eXpenceWidgetBundle.swift in Sources */,
+				1F945A832BAFDB6200103A53 /* SpecialDate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -280,13 +280,15 @@ struct DateAdjustView: View {
             }
 
             Button(dateText) {
-                switch specialDate.type {
-                case .day:
-                    specialDate.type = .week
-                case .week:
-                    specialDate.type = .month
-                case .month:
-                    specialDate.type = .day
+                withAnimation {
+                    switch specialDate.type {
+                    case .day:
+                        specialDate.type = .week
+                    case .week:
+                        specialDate.type = .month
+                    case .month:
+                        specialDate.type = .day
+                    }
                 }
             }
             .foregroundStyle(Color(.lightGray))
@@ -308,22 +310,24 @@ struct DateAdjustView: View {
     }
 
     func changeDate(by value: Int) {
-        switch specialDate.type {
-        case .day:
-            guard let newDate = Calendar.current.date(byAdding: .day, value: value, to: specialDate.date) else {
-                return
+        withAnimation {
+            switch specialDate.type {
+            case .day:
+                guard let newDate = Calendar.current.date(byAdding: .day, value: value, to: specialDate.date) else {
+                    return
+                }
+                specialDate.date = newDate
+            case .week:
+                guard let newDate = Calendar.current.date(byAdding: .weekOfYear, value: value, to: specialDate.date) else {
+                    return
+                }
+                specialDate.date = newDate
+            case .month:
+                guard let newDate = Calendar.current.date(byAdding: .month, value: value, to: specialDate.date) else {
+                    return
+                }
+                specialDate.date = newDate
             }
-            specialDate.date = newDate
-        case .week:
-            guard let newDate = Calendar.current.date(byAdding: .weekOfYear, value: value, to: specialDate.date) else {
-                return
-            }
-            specialDate.date = newDate
-        case .month:
-            guard let newDate = Calendar.current.date(byAdding: .month, value: value, to: specialDate.date) else {
-                return
-            }
-            specialDate.date = newDate
         }
     }
 
@@ -365,15 +369,6 @@ struct SettingsView: View {
             }
         }
     }
-}
-
-struct AggregatedExpense: Identifiable {
-    var id: Date {
-        return timestamp
-    }
-
-    let timestamp: Date
-    let amount: Double
 }
 
 struct ChartView: View {
@@ -519,7 +514,7 @@ struct ChartView: View {
         .foregroundStyle(.purple)
     }
 
-    private func aggregateMonthly() -> [AggregatedExpense] {
+    func aggregateMonthly() -> [AggregatedExpense] {
         let end = Calendar.current.date(byAdding: .minute, value: -1, to: specialDate.date.endOfMonth)!
         let endDay = Calendar.current.dateComponents([.day], from: end).day!
         print("end \(end)")

@@ -133,15 +133,15 @@ extension Date {
 
 extension Date {
     var startOfWeek: Date? {
-        let gregorian = Calendar(identifier: .gregorian)
-        guard let lastSunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
-        return gregorian.date(byAdding: .day, value: 1, to: lastSunday)
+        let iso = Calendar(identifier: .iso8601)
+        guard let monday = iso.date(from: iso.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
+        return monday
     }
 
     var endOfWeek: Date? {
-        let gregorian = Calendar(identifier: .gregorian)
+        let iso = Calendar(identifier: .iso8601)
         guard let startOfWeek = self.startOfWeek else { return nil }
-        return gregorian.date(byAdding: .weekOfYear, value: 1, to: startOfWeek)
+        return iso.date(byAdding: .weekOfYear, value: 1, to: startOfWeek)
 
     }
 
@@ -235,4 +235,13 @@ extension View {
             self
         }
     }
+}
+
+struct AggregatedExpense: Identifiable {
+    var id: Date {
+        return timestamp
+    }
+
+    let timestamp: Date
+    let amount: Double
 }
