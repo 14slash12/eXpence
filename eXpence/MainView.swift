@@ -9,7 +9,6 @@ import SwiftUI
 import SwiftData
 import Charts
 import WidgetKit
-import RevenueCat
 
 struct ExpenseView: View {
     let expense: Expense
@@ -364,11 +363,8 @@ struct SettingsView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var userViewModel: UserViewModel
     @State var start: Date = Date()
     @State var end: Date = Date()
-
-    @State var currentOffering: Offering?
 
     var body: some View {
         ScrollView {
@@ -396,7 +392,6 @@ struct SettingsView: View {
                     Spacer()
                 }
 
-
                 VStack {
                     HStack {
                         Text("Pro Features")
@@ -408,97 +403,77 @@ struct SettingsView: View {
                             .foregroundStyle(.purple)
                         Spacer()
                     }
-                    
-                    if userViewModel.isSubscriptionActive {
-                        Text("Thank you for being a Pro member! You'll be faster reaching your saving goals!")
-                    } else {
-                        
+                    HStack {
+                        Text("Become a Pro member and get awesome features")
+                        Spacer()
+                    }
+                    VStack(alignment: .leading) {
                         HStack {
-                            Text("Become a Pro member and get awesome features")
-                            Spacer()
-                        }
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Image(systemName: "appwindow.swipe.rectangle")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                    .background {
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                    }
-                                Text("Fantastic Home Screen Widgets")
-                            }
-                            
-                            HStack {
-                                Image(systemName: "list.number")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                    .background {
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                    }
-                                Text("Exports to CSV files")
-                            }
-                            
-                            HStack {
-                                Image(systemName: "wand.and.stars")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                    .background {
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                    }
-                                Text("Lifetime access")
-                            }
-                            
-                            HStack {
-                                Image(systemName: "heart.fill")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                    .background {
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                    }
-                                Text("Support solo project for even more future pro features. Thank you!")
-                                    .frame(height: .myLarge1)
-                                
-                            }
-                        }
-                        
-                        if let package = currentOffering?.availablePackages.first {
-                            Button {
-                                Purchases.shared.purchase(package: package) { (transaction, customerInfo, error, userCancelled) in
-                                    if customerInfo?.entitlements["Pro"]?.isActive == true {
-                                        // Unlock that great "pro" content
-                                        userViewModel.isSubscriptionActive = true
-                                    }
-                                }
-                            } label: {
-                                ZStack {
+                            Image(systemName: "appwindow.swipe.rectangle")
+                                .foregroundStyle(.black)
+                                .padding()
+                                .background {
                                     RoundedRectangle(cornerRadius: .myCornerRadius)
                                         .foregroundStyle(Color(.primary))
-                                    Text("Become Pro for \(package.storeProduct.localizedPriceString)")
-                                        .foregroundStyle(.black)
-                                        .fontDesign(.monospaced)
-                                        .padding()
                                 }
-                            }
-                            .shadow(color: .purple, radius: 10)
-                            .padding([.leading, .trailing, .top])
-                            
-                            Button("Restore Purchase") {
-                                Task {
-                                    do {
-                                        let customerInfo: CustomerInfo = try await Purchases.shared.restorePurchases()
-                                        userViewModel.isSubscriptionActive = customerInfo.entitlements.all["Pro"]?.isActive == true
-                                    } catch {
-                                        print("Error restoring purchase")
-                                    }
+                            Text("Fantastic Home Screen Widgets")
+                        }
+
+                        HStack {
+                            Image(systemName: "list.number")
+                                .foregroundStyle(.black)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                                        .foregroundStyle(Color(.primary))
                                 }
-                            }
-                            .foregroundStyle(Color(.lightGray))
+                            Text("Exports to CSV files")
+                        }
+
+                        HStack {
+                            Image(systemName: "wand.and.stars")
+                                .foregroundStyle(.black)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                                        .foregroundStyle(Color(.primary))
+                                }
+                            Text("Lifetime access")
+                        }
+
+                        HStack {
+                            Image(systemName: "heart.fill")
+                                .foregroundStyle(.black)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                                        .foregroundStyle(Color(.primary))
+                                }
+                            Text("Support solo project for even more future pro features. Thank you!")
+                                .frame(height: .myLarge1)
+
                         }
                     }
+
+                    Button {
+
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                .foregroundStyle(Color(.primary))
+                            Text("Become Pro")
+                                .foregroundStyle(.black)
+                                .fontDesign(.monospaced)
+                                .padding()
+                        }
+                    }
+                    .shadow(color: .purple, radius: 10)
+                    .padding([.leading, .trailing, .top])
+
+                    Button("Restore Purchase") {
+
+                    }
+                    .foregroundStyle(Color(.lightGray))
                 }
                 .padding()
                 .foregroundStyle(colorScheme == .light ? .white : .black)
@@ -538,16 +513,10 @@ struct SettingsView: View {
                             }
                         }
                         .padding([.trailing])
-                        
-                        if userViewModel.isSubscriptionActive {
-                            ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
-                                Image(systemName: "square.and.arrow.up")
-                                    .foregroundStyle(colorScheme == .light ? .white : .black)
-                            }
-                        } else {
-                            Image(systemName: "lock.fill")
-                                .foregroundStyle(.red)
-                                .shadow(color: .red, radius: 10)
+
+                        ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundStyle(colorScheme == .light ? .white : .black)
                         }
                     }
                     .padding()
@@ -654,13 +623,6 @@ struct SettingsView: View {
             .padding()
             .onAppear {
                 datesToThisWeek()
-            }
-        }
-        .onAppear {
-            Purchases.shared.getOfferings { offerings, error in
-                if let offer = offerings?.current, error == nil {
-                    currentOffering = offer
-                }
             }
         }
     }
@@ -1067,7 +1029,7 @@ struct MainView: View {
     @State var showAddView: Bool = false
     @State var showDataView: Bool = true
     @FocusState var isNameFocused:Bool
-    @State var showSettings: Bool = false
+    @State var showSettings: Bool = true
 
     enum Page {
         case list

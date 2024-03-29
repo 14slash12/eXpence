@@ -56,19 +56,13 @@ struct SimpleEntry: TimelineEntry {
 
 struct eXpenceWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var userViewModel: UserViewModel
 
     var entry: Provider.Entry
     let specialDate: SpecialDate
 
     var body: some View {
         VStack {
-            if userViewModel.isSubscriptionActive {
-                sumView()
-            } else {
-                Text("Become a Pro member to unlock widgets")
-            }
-
+            sumView()
 //            Chart(aggregateWeekly()) { expense in
 //                LineMark(x: .value("Date", expense.timestamp),
 //                         y: .value("Amount", expense.amount))

@@ -7,24 +7,15 @@
 
 import SwiftUI
 import SwiftData
-import RevenueCat
 
 @main
 @MainActor
 struct eXpenceApp: App {
-    @StateObject var userViewModel = UserViewModel()
-
     var body: some Scene {
         WindowGroup {
             MainView()
         }
         .modelContainer(sharedModelContainer)
-        .environmentObject(userViewModel)
-    }
-
-    init() {
-        Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "appl_qEGalBcGAGTVeiEvhEcbFZrDvlc")
     }
 }
 

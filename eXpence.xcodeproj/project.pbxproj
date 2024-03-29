@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F0DE75F2BB0C361009C8365 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 1F0DE75E2BB0C361009C8365 /* RevenueCat */; };
-		1F0DE76D2BB0C42E009C8365 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 1F0DE76C2BB0C42E009C8365 /* RevenueCat */; };
 		1F90767F2B9C8A4F00ECF8A7 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
 		1F945A832BAFDB6200103A53 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
 		1FA264092B9B9994000A46BE /* eXpenceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264082B9B9994000A46BE /* eXpenceApp.swift */; };
@@ -20,9 +18,6 @@
 		1FA264292B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264282B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift */; };
 		1FA264362B9B9C7F000A46BE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264352B9B9C7F000A46BE /* MainView.swift */; };
 		1FA264382B9BA3EB000A46BE /* Generalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264372B9BA3EB000A46BE /* Generalize.swift */; };
-		1FA983D22BB0AD16005E8A31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA983D12BB0AD16005E8A31 /* StoreKit.framework */; };
-		1FA983D42BB0BC1A005E8A31 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */; };
-		1FA983D52BB0BDBC005E8A31 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */; };
 		1FF1D38D2BAF533900BA17A0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF841D92BAF476400CE534C /* WidgetKit.framework */; };
 		1FF1D38E2BAF533900BA17A0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF841DB2BAF476400CE534C /* SwiftUI.framework */; };
 		1FF1D3912BAF533900BA17A0 /* eXpenceWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1D3902BAF533900BA17A0 /* eXpenceWidgetBundle.swift */; };
@@ -87,8 +82,6 @@
 		1FA264282B9B9999000A46BE /* eXpenceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1FA264352B9B9C7F000A46BE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1FA264372B9BA3EB000A46BE /* Generalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalize.swift; sourceTree = "<group>"; };
-		1FA983D12BB0AD16005E8A31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		1FF1D38C2BAF533900BA17A0 /* eXpenceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = eXpenceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF1D3902BAF533900BA17A0 /* eXpenceWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWidgetBundle.swift; sourceTree = "<group>"; };
 		1FF1D3922BAF533900BA17A0 /* eXpenceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWidget.swift; sourceTree = "<group>"; };
@@ -105,8 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA983D22BB0AD16005E8A31 /* StoreKit.framework in Frameworks */,
-				1F0DE75F2BB0C361009C8365 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +121,6 @@
 			files = (
 				1FF1D38E2BAF533900BA17A0 /* SwiftUI.framework in Frameworks */,
 				1FF1D38D2BAF533900BA17A0 /* WidgetKit.framework in Frameworks */,
-				1F0DE76D2BB0C42E009C8365 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +160,6 @@
 				1FA2640E2B9B9998000A46BE /* Assets.xcassets */,
 				1FA264112B9B9998000A46BE /* Preview Content */,
 				1FA264352B9B9C7F000A46BE /* MainView.swift */,
-				1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */,
 				1FA264372B9BA3EB000A46BE /* Generalize.swift */,
 				1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */,
 			);
@@ -216,7 +205,6 @@
 		1FF841D82BAF476400CE534C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1FA983D12BB0AD16005E8A31 /* StoreKit.framework */,
 				1FF841D92BAF476400CE534C /* WidgetKit.framework */,
 				1FF841DB2BAF476400CE534C /* SwiftUI.framework */,
 			);
@@ -241,9 +229,6 @@
 				1FF1D3982BAF533B00BA17A0 /* PBXTargetDependency */,
 			);
 			name = eXpence;
-			packageProductDependencies = (
-				1F0DE75E2BB0C361009C8365 /* RevenueCat */,
-			);
 			productName = MyExpenses;
 			productReference = 1FA264052B9B9994000A46BE /* eXpence.app */;
 			productType = "com.apple.product-type.application";
@@ -297,9 +282,6 @@
 			dependencies = (
 			);
 			name = eXpenceWidgetExtension;
-			packageProductDependencies = (
-				1F0DE76C2BB0C42E009C8365 /* RevenueCat */,
-			);
 			productName = eXpenceWidgetExtension;
 			productReference = 1FF1D38C2BAF533900BA17A0 /* eXpenceWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -339,9 +321,6 @@
 				Base,
 			);
 			mainGroup = 1FA263FC2B9B9993000A46BE;
-			packageReferences = (
-				1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */,
-			);
 			productRefGroup = 1FA264062B9B9994000A46BE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -398,7 +377,6 @@
 				1FA2640D2B9B9994000A46BE /* Expense.swift in Sources */,
 				1FF1D3A22BAF611100BA17A0 /* Context.swift in Sources */,
 				1F90767F2B9C8A4F00ECF8A7 /* SpecialDate.swift in Sources */,
-				1FA983D42BB0BC1A005E8A31 /* UserViewModel.swift in Sources */,
 				1FA264092B9B9994000A46BE /* eXpenceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +407,6 @@
 				1FF1D3932BAF533900BA17A0 /* eXpenceWidget.swift in Sources */,
 				1FF1D3A32BAF611200BA17A0 /* Context.swift in Sources */,
 				1FF1D3912BAF533900BA17A0 /* eXpenceWidgetBundle.swift in Sources */,
-				1FA983D52BB0BDBC005E8A31 /* UserViewModel.swift in Sources */,
 				1F945A832BAFDB6200103A53 /* SpecialDate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -849,30 +826,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RevenueCat/purchases-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.39.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		1F0DE75E2BB0C361009C8365 /* RevenueCat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */;
-			productName = RevenueCat;
-		};
-		1F0DE76C2BB0C42E009C8365 /* RevenueCat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */;
-			productName = RevenueCat;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1FA263FD2B9B9993000A46BE /* Project object */;
 }
