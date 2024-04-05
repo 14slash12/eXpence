@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5CB3B32BB6D37300184E55 /* eXpenceWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3B22BB6D37300184E55 /* eXpenceWatchApp.swift */; };
+		1F5CB3B52BB6D37300184E55 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3B42BB6D37300184E55 /* ContentView.swift */; };
+		1F5CB3B72BB6D37400184E55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F5CB3B62BB6D37400184E55 /* Assets.xcassets */; };
+		1F5CB3BA2BB6D37400184E55 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F5CB3B92BB6D37400184E55 /* Preview Assets.xcassets */; };
+		1F5CB3C42BB6D37400184E55 /* eXpenceWatch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3C32BB6D37400184E55 /* eXpenceWatch_Watch_AppTests.swift */; };
+		1F5CB3CE2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3CD2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITests.swift */; };
+		1F5CB3D02BB6D37400184E55 /* eXpenceWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3CF2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITestsLaunchTests.swift */; };
+		1F5CB3D32BB6D37400184E55 /* eXpenceWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1F5CB3B02BB6D37300184E55 /* eXpenceWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1F5CB3DF2BB6D3C400184E55 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3DE2BB6D3C400184E55 /* WatchViewModel.swift */; };
+		1F5CB3E12BB6D3CC00184E55 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5CB3E02BB6D3CC00184E55 /* PhoneViewModel.swift */; };
+		1F5CB3E32BB6D41E00184E55 /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5CB3E22BB6D41E00184E55 /* WatchConnectivity.framework */; platformFilter = ios; };
+		1F5CB3E42BB6D75300184E55 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2640C2B9B9994000A46BE /* Expense.swift */; };
+		1F5CB3E52BBAA48900184E55 /* Generalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264372B9BA3EB000A46BE /* Generalize.swift */; };
 		1F90767F2B9C8A4F00ECF8A7 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
 		1F945A832BAFDB6200103A53 /* SpecialDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */; };
 		1FA264092B9B9994000A46BE /* eXpenceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA264082B9B9994000A46BE /* eXpenceApp.swift */; };
@@ -31,6 +44,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F5CB3C02BB6D37400184E55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA263FD2B9B9993000A46BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F5CB3AF2BB6D37300184E55;
+			remoteInfo = "eXpenceWatch Watch App";
+		};
+		1F5CB3CA2BB6D37400184E55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA263FD2B9B9993000A46BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F5CB3AF2BB6D37300184E55;
+			remoteInfo = "eXpenceWatch Watch App";
+		};
+		1F5CB3D12BB6D37400184E55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FA263FD2B9B9993000A46BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F5CB3AF2BB6D37300184E55;
+			remoteInfo = "eXpenceWatch Watch App";
+		};
 		1FA264192B9B9999000A46BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1FA263FD2B9B9993000A46BE /* Project object */;
@@ -55,6 +89,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1F5CB3D42BB6D37400184E55 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				1F5CB3D32BB6D37400184E55 /* eXpenceWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1FF841EC2BAF476700CE534C /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +114,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F5CB3B02BB6D37300184E55 /* eXpenceWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eXpenceWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F5CB3B22BB6D37300184E55 /* eXpenceWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWatchApp.swift; sourceTree = "<group>"; };
+		1F5CB3B42BB6D37300184E55 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1F5CB3B62BB6D37400184E55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1F5CB3B92BB6D37400184E55 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1F5CB3BF2BB6D37400184E55 /* eXpenceWatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eXpenceWatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F5CB3C32BB6D37400184E55 /* eXpenceWatch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWatch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		1F5CB3C92BB6D37400184E55 /* eXpenceWatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eXpenceWatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F5CB3CD2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		1F5CB3CF2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1F5CB3DE2BB6D3C400184E55 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
+		1F5CB3E02BB6D3CC00184E55 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
+		1F5CB3E22BB6D41E00184E55 /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.0.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialDate.swift; sourceTree = "<group>"; };
 		1FA264052B9B9994000A46BE /* eXpence.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eXpence.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA264082B9B9994000A46BE /* eXpenceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceApp.swift; sourceTree = "<group>"; };
@@ -94,10 +152,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1F5CB3AD2BB6D37300184E55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3BC2BB6D37400184E55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3C62BB6D37400184E55 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1FA264022B9B9994000A46BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5CB3E32BB6D41E00184E55 /* WatchConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +207,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F5CB3B12BB6D37300184E55 /* eXpenceWatch */ = {
+			isa = PBXGroup;
+			children = (
+				1F5CB3B22BB6D37300184E55 /* eXpenceWatchApp.swift */,
+				1F5CB3B42BB6D37300184E55 /* ContentView.swift */,
+				1F5CB3B62BB6D37400184E55 /* Assets.xcassets */,
+				1F5CB3B82BB6D37400184E55 /* Preview Content */,
+				1F5CB3DE2BB6D3C400184E55 /* WatchViewModel.swift */,
+			);
+			path = eXpenceWatch;
+			sourceTree = "<group>";
+		};
+		1F5CB3B82BB6D37400184E55 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1F5CB3B92BB6D37400184E55 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1F5CB3C22BB6D37400184E55 /* eXpenceWatchTests */ = {
+			isa = PBXGroup;
+			children = (
+				1F5CB3C32BB6D37400184E55 /* eXpenceWatch_Watch_AppTests.swift */,
+			);
+			path = eXpenceWatchTests;
+			sourceTree = "<group>";
+		};
+		1F5CB3CC2BB6D37400184E55 /* eXpenceWatchUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1F5CB3CD2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITests.swift */,
+				1F5CB3CF2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = eXpenceWatchUITests;
+			sourceTree = "<group>";
+		};
 		1FA263FC2B9B9993000A46BE = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +253,9 @@
 				1FA2641B2B9B9999000A46BE /* eXpenceTests */,
 				1FA264252B9B9999000A46BE /* eXpenceUITests */,
 				1FF1D38F2BAF533900BA17A0 /* eXpenceWidget */,
+				1F5CB3B12BB6D37300184E55 /* eXpenceWatch */,
+				1F5CB3C22BB6D37400184E55 /* eXpenceWatchTests */,
+				1F5CB3CC2BB6D37400184E55 /* eXpenceWatchUITests */,
 				1FF841D82BAF476400CE534C /* Frameworks */,
 				1FA264062B9B9994000A46BE /* Products */,
 			);
@@ -148,6 +268,9 @@
 				1FA264182B9B9999000A46BE /* eXpenceTests.xctest */,
 				1FA264222B9B9999000A46BE /* eXpenceUITests.xctest */,
 				1FF1D38C2BAF533900BA17A0 /* eXpenceWidgetExtension.appex */,
+				1F5CB3B02BB6D37300184E55 /* eXpenceWatch.app */,
+				1F5CB3BF2BB6D37400184E55 /* eXpenceWatchTests.xctest */,
+				1F5CB3C92BB6D37400184E55 /* eXpenceWatchUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +285,7 @@
 				1FA264352B9B9C7F000A46BE /* MainView.swift */,
 				1FA264372B9BA3EB000A46BE /* Generalize.swift */,
 				1F90767E2B9C8A4E00ECF8A7 /* SpecialDate.swift */,
+				1F5CB3E02BB6D3CC00184E55 /* PhoneViewModel.swift */,
 			);
 			path = eXpence;
 			sourceTree = "<group>";
@@ -205,6 +329,7 @@
 		1FF841D82BAF476400CE534C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F5CB3E22BB6D41E00184E55 /* WatchConnectivity.framework */,
 				1FF841D92BAF476400CE534C /* WidgetKit.framework */,
 				1FF841DB2BAF476400CE534C /* SwiftUI.framework */,
 			);
@@ -214,6 +339,59 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1F5CB3AF2BB6D37300184E55 /* eXpenceWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F5CB3DB2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatch" */;
+			buildPhases = (
+				1F5CB3AC2BB6D37300184E55 /* Sources */,
+				1F5CB3AD2BB6D37300184E55 /* Frameworks */,
+				1F5CB3AE2BB6D37300184E55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = eXpenceWatch;
+			productName = "eXpenceWatch Watch App";
+			productReference = 1F5CB3B02BB6D37300184E55 /* eXpenceWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1F5CB3BE2BB6D37400184E55 /* eXpenceWatchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F5CB3DC2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatchTests" */;
+			buildPhases = (
+				1F5CB3BB2BB6D37400184E55 /* Sources */,
+				1F5CB3BC2BB6D37400184E55 /* Frameworks */,
+				1F5CB3BD2BB6D37400184E55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F5CB3C12BB6D37400184E55 /* PBXTargetDependency */,
+			);
+			name = eXpenceWatchTests;
+			productName = "eXpenceWatch Watch AppTests";
+			productReference = 1F5CB3BF2BB6D37400184E55 /* eXpenceWatchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1F5CB3C82BB6D37400184E55 /* eXpenceWatchUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F5CB3DD2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatchUITests" */;
+			buildPhases = (
+				1F5CB3C52BB6D37400184E55 /* Sources */,
+				1F5CB3C62BB6D37400184E55 /* Frameworks */,
+				1F5CB3C72BB6D37400184E55 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F5CB3CB2BB6D37400184E55 /* PBXTargetDependency */,
+			);
+			name = eXpenceWatchUITests;
+			productName = "eXpenceWatch Watch AppUITests";
+			productReference = 1F5CB3C92BB6D37400184E55 /* eXpenceWatchUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		1FA264042B9B9994000A46BE /* eXpence */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FA2642C2B9B9999000A46BE /* Build configuration list for PBXNativeTarget "eXpence" */;
@@ -222,11 +400,13 @@
 				1FA264022B9B9994000A46BE /* Frameworks */,
 				1FA264032B9B9994000A46BE /* Resources */,
 				1FF841EC2BAF476700CE534C /* Embed Foundation Extensions */,
+				1F5CB3D42BB6D37400184E55 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				1FF1D3982BAF533B00BA17A0 /* PBXTargetDependency */,
+				1F5CB3D22BB6D37400184E55 /* PBXTargetDependency */,
 			);
 			name = eXpence;
 			productName = MyExpenses;
@@ -296,6 +476,17 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					1F5CB3AF2BB6D37300184E55 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
+					1F5CB3BE2BB6D37400184E55 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 1F5CB3AF2BB6D37300184E55;
+					};
+					1F5CB3C82BB6D37400184E55 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 1F5CB3AF2BB6D37300184E55;
+					};
 					1FA264042B9B9994000A46BE = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -329,11 +520,37 @@
 				1FA264172B9B9999000A46BE /* eXpenceTests */,
 				1FA264212B9B9999000A46BE /* eXpenceUITests */,
 				1FF1D38B2BAF533900BA17A0 /* eXpenceWidgetExtension */,
+				1F5CB3AF2BB6D37300184E55 /* eXpenceWatch */,
+				1F5CB3BE2BB6D37400184E55 /* eXpenceWatchTests */,
+				1F5CB3C82BB6D37400184E55 /* eXpenceWatchUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1F5CB3AE2BB6D37300184E55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F5CB3BA2BB6D37400184E55 /* Preview Assets.xcassets in Resources */,
+				1F5CB3B72BB6D37400184E55 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3BD2BB6D37400184E55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3C72BB6D37400184E55 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1FA264032B9B9994000A46BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -368,12 +585,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1F5CB3AC2BB6D37300184E55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F5CB3E42BB6D75300184E55 /* Expense.swift in Sources */,
+				1F5CB3B52BB6D37300184E55 /* ContentView.swift in Sources */,
+				1F5CB3B32BB6D37300184E55 /* eXpenceWatchApp.swift in Sources */,
+				1F5CB3E52BBAA48900184E55 /* Generalize.swift in Sources */,
+				1F5CB3DF2BB6D3C400184E55 /* WatchViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3BB2BB6D37400184E55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F5CB3C42BB6D37400184E55 /* eXpenceWatch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F5CB3C52BB6D37400184E55 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F5CB3CE2BB6D37400184E55 /* eXpenceWatch_Watch_AppUITests.swift in Sources */,
+				1F5CB3D02BB6D37400184E55 /* eXpenceWatch_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1FA264012B9B9994000A46BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				1FA264362B9B9C7F000A46BE /* MainView.swift in Sources */,
 				1FA264382B9BA3EB000A46BE /* Generalize.swift in Sources */,
+				1F5CB3E12BB6D3CC00184E55 /* PhoneViewModel.swift in Sources */,
 				1FA2640D2B9B9994000A46BE /* Expense.swift in Sources */,
 				1FF1D3A22BAF611100BA17A0 /* Context.swift in Sources */,
 				1F90767F2B9C8A4F00ECF8A7 /* SpecialDate.swift in Sources */,
@@ -414,6 +661,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F5CB3C12BB6D37400184E55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F5CB3AF2BB6D37300184E55 /* eXpenceWatch */;
+			targetProxy = 1F5CB3C02BB6D37400184E55 /* PBXContainerItemProxy */;
+		};
+		1F5CB3CB2BB6D37400184E55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F5CB3AF2BB6D37300184E55 /* eXpenceWatch */;
+			targetProxy = 1F5CB3CA2BB6D37400184E55 /* PBXContainerItemProxy */;
+		};
+		1F5CB3D22BB6D37400184E55 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F5CB3AF2BB6D37300184E55 /* eXpenceWatch */;
+			targetProxy = 1F5CB3D12BB6D37400184E55 /* PBXContainerItemProxy */;
+		};
 		1FA2641A2B9B9999000A46BE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1FA264042B9B9994000A46BE /* eXpence */;
@@ -432,6 +694,151 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1F5CB3D52BB6D37400184E55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"eXpenceWatch/Preview Content\"";
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = eXpenceWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.apperium.Xpenses;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apperium.Xpenses.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		1F5CB3D62BB6D37400184E55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"eXpenceWatch/Preview Content\"";
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = eXpenceWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.apperium.Xpenses;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apperium.Xpenses.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		1F5CB3D72BB6D37400184E55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.david.lin.eXpenceWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eXpenceWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eXpenceWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		1F5CB3D82BB6D37400184E55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.david.lin.eXpenceWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/eXpenceWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/eXpenceWatch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		1F5CB3D92BB6D37400184E55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.david.lin.eXpenceWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "eXpenceWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		1F5CB3DA2BB6D37400184E55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5DSZ9JN62Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.david.lin.eXpenceWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "eXpenceWatch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 		1FA2642A2B9B9999000A46BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -569,8 +976,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -579,7 +986,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apperium.Xpenses;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -609,8 +1017,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -619,7 +1027,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apperium.Xpenses;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -780,6 +1189,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1F5CB3DB2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F5CB3D52BB6D37400184E55 /* Debug */,
+				1F5CB3D62BB6D37400184E55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F5CB3DC2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F5CB3D72BB6D37400184E55 /* Debug */,
+				1F5CB3D82BB6D37400184E55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F5CB3DD2BB6D37400184E55 /* Build configuration list for PBXNativeTarget "eXpenceWatchUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F5CB3D92BB6D37400184E55 /* Debug */,
+				1F5CB3DA2BB6D37400184E55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1FA264002B9B9994000A46BE /* Build configuration list for PBXProject "eXpence" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

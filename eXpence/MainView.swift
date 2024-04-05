@@ -1011,6 +1011,7 @@ struct DataView: View {
 }
 
 struct MainView: View {
+    @StateObject var viewModel: PhoneViewModel
     @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
@@ -1029,7 +1030,7 @@ struct MainView: View {
     @State var showAddView: Bool = false
     @State var showDataView: Bool = true
     @FocusState var isNameFocused:Bool
-    @State var showSettings: Bool = true
+    @State var showSettings: Bool = false
 
     enum Page {
         case list
@@ -1115,6 +1116,7 @@ struct MainView: View {
         }
         .onAppear() {
             filterDate()
+            sendCategories()
         }
         .onChange(of: editExpense) {
             let formatter = NumberFormatter()
@@ -1372,9 +1374,13 @@ struct MainView: View {
                 .opacity(0.25)
         }
     }
+
+    private func sendCategories() {
+        viewModel.session.transferUserInfo(["categories": categories.map { $0.name }])
+    }
 }
 
 #Preview {
-    MainView()
+    MainView(viewModel: PhoneViewModel(modelContext: previewConstantContainer.mainContext))
         .modelContainer(previewConstantContainer)
 }

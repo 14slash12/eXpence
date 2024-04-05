@@ -49,6 +49,17 @@ enum ExpensesSchemaV2: VersionedSchema {
             self.timestamp = timestamp
             self.category = category
         }
+
+        var asDictionary: [String: Any] {
+            var dict = [String: Any]()
+            dict["name"] = self.name
+            dict["amount"] = self.amount
+            dict["timestamp"] = self.timestamp
+            if let category = self.category {
+                dict["category"] = category.asDictionary
+            }
+            return dict
+        }
     }
 
     @Model
@@ -59,6 +70,13 @@ enum ExpensesSchemaV2: VersionedSchema {
         init(name: String, symbol: String) {
             self.name = name
             self.symbol = symbol
+        }
+
+        var asDictionary: [String: Any] {
+            var dict = [String: Any]()
+            dict["name"] = self.name
+            dict["symbol"] = self.symbol
+            return dict
         }
     }
 }

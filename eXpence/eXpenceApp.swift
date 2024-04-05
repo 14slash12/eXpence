@@ -13,7 +13,7 @@ import SwiftData
 struct eXpenceApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView(viewModel: PhoneViewModel(modelContext: sharedModelContainer.mainContext))
         }
         .modelContainer(sharedModelContainer)
     }
