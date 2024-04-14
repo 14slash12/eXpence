@@ -1201,7 +1201,7 @@ struct MainView: View {
     @State var editExpense: Expense? = nil
 
     @State var name: String = ""
-    @State var amount: String = ""
+    @State var amount: Double?
     @State var date: Date = Date()
     @State var category: ExpenseCategory?
 
@@ -1210,7 +1210,8 @@ struct MainView: View {
     @State var specialDate = SpecialDate(date: Date(), type: .week)
     @State var showAddView: Bool = false
     @State var showDataView: Bool = true
-    @FocusState var isNameFocused:Bool
+    @FocusState var isNameFocused: Bool
+    @FocusState var isAmountFocused: Bool
     @State var showSettings: Bool = false
 
     enum Page {
@@ -1269,6 +1270,7 @@ struct MainView: View {
                     Button {
                         withAnimation {
                             showAddView = true
+                            isNameFocused = true
                             reset()
                         }
                     } label: {
@@ -1303,10 +1305,10 @@ struct MainView: View {
             formatter.locale = .current
             formatter.maximumFractionDigits = 2
 
-            guard let editExpense, let amountString = formatter.string(from: editExpense.amount as NSNumber) else { return }
+            guard let editExpense else { return }
 
             self.name = editExpense.name
-            self.amount = amountString
+            self.amount = editExpense.amount
             self.date = editExpense.timestamp
             self.category = editExpense.category
 
@@ -1318,8 +1320,25 @@ struct MainView: View {
             }
         }
         .onChange(of: isNameFocused) {
-            withAnimation(.snappy) {
-                showDataView.toggle()
+            if isNameFocused || isAmountFocused {
+                withAnimation(.snappy) {
+                    showDataView = false
+                }
+            } else {
+                withAnimation(.snappy) {
+                    showDataView = true
+                }
+            }
+        }
+        .onChange(of: isAmountFocused) {
+            if isNameFocused || isAmountFocused {
+                withAnimation(.snappy) {
+                    showDataView = false
+                }
+            } else {
+                withAnimation(.snappy) {
+                    showDataView = true
+                }
             }
         }
         .sheet(isPresented: $showSettings) {
@@ -1329,7 +1348,7 @@ struct MainView: View {
 
     private func reset() {
         self.name = ""
-        self.amount = ""
+        self.amount = nil
         self.date = Date()
         self.category = nil
     }
@@ -1374,7 +1393,7 @@ struct MainView: View {
     }
 
     private func addItem() {
-        guard let amount = K.stringToDoubleFormatter.number(from: amount)?.doubleValue else {
+        guard let amount else {
             print("Amount failed")
             return
         }
@@ -1496,16 +1515,27 @@ struct MainView: View {
                 Image(systemName: "creditcard")
                     .padding([.trailing])
                     .frame(width: .myLarge2)
-
-                TextField("Amount", text: $amount)
+                
+                TextField("Amount", value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                    .keyboardType(.decimalPad)
                     .padding(10.0)
                     .background {
                         RoundedRectangle(cornerRadius: .myCornerRadius/2)
                             .foregroundStyle(Color(.lightGray))
                             .opacity(0.25)
                     }
-                    .focused($isNameFocused)
+                    .focused($isAmountFocused)
                     .submitLabel(.done)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+
+                            Button("Done") {
+                                isAmountFocused = false
+
+                            }
+                        }
+                    }
             }
             .padding([.bottom], 5.0)
 
