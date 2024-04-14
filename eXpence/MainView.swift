@@ -10,6 +10,8 @@ import SwiftData
 import Charts
 import WidgetKit
 import RevenueCat
+import EmojiPicker
+import Smile
 
 struct ExpenseView: View {
     let expense: Expense
@@ -370,7 +372,8 @@ struct CategoryView: View {
     }
     
     @State var name: String = ""
-    @State var symbol: String = ""
+    @State var symbol: Emoji?
+    @State var displayEmojiPicker: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -384,15 +387,23 @@ struct CategoryView: View {
                         .opacity(0.25)
                 }
 
-            Text("Emoji")
+            Text("Select emoji")
                 .foregroundStyle(Color(.lightGray))
-            TextField("Emoji", text: $symbol)
-                .padding()
-                .background {
-                    RoundedRectangle(cornerRadius: .myCornerRadius/2)
-                        .foregroundStyle(Color(.lightGray))
-                        .opacity(0.25)
+            Button {
+                displayEmojiPicker = true
+            } label: {
+                Text(symbol?.value ?? "Tap to select")
+            }
+            .padding()
+            .sheet(isPresented: $displayEmojiPicker) {
+                NavigationStack {
+                    EmojiPickerView(selectedEmoji: $symbol, selectedColor: .orange)
+                                        .navigationTitle("Emojis")
+                                        .navigationBarTitleDisplayMode(.inline)
                 }
+            }
+
+
             HStack {
                 Spacer()
                 if let category {
@@ -418,7 +429,7 @@ struct CategoryView: View {
             if let category {
                 // Edit the incoming animal.
                 name = category.name
-                symbol = category.symbol
+                symbol = Emoji(value: category.symbol, name: Smile.name(emoji: category.symbol).first ?? "")
             }
         }
         .toolbar {
@@ -429,6 +440,7 @@ struct CategoryView: View {
                         dismiss()
                     }
                 }
+                .disabled(symbol == nil)
             }
         }
     }
@@ -436,9 +448,12 @@ struct CategoryView: View {
     private func save() {
         if let category {
             category.name = name
-            category.symbol = symbol
+            if let symbol  {
+                category.symbol = symbol.value
+            }
         } else {
-            let newCategory = ExpenseCategory(name: name, symbol: symbol)
+            guard let symbol else { return }
+            let newCategory = ExpenseCategory(name: name, symbol: symbol.value)
             modelContext.insert(newCategory)
         }
     }

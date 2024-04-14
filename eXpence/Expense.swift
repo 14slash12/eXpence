@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import EmojiPicker
 
 enum ExpensesSchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)

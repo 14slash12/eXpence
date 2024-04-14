@@ -1,5 +1,15 @@
 {
+  "originHash" : "0eba3b63fd91b753909c63e62d5cda5933e57a06467d51bbc8e07e8640253a38",
   "pins" : [
+    {
+      "identity" : "emojipicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kelvas09/EmojiPicker",
+      "state" : {
+        "revision" : "d787591e2121b617209172ad6a8ebf2975f605ae",
+        "version" : "1.0.1"
+      }
+    },
     {
       "identity" : "purchases-ios",
       "kind" : "remoteSourceControl",
@@ -8,7 +18,16 @@
         "revision" : "12240d045cfad9f281bc21e9f09d0c33ff09b74f",
         "version" : "4.39.0"
       }
+    },
+    {
+      "identity" : "smile",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onmyway133/Smile",
+      "state" : {
+        "revision" : "40604722a7a56f735124e069fcbb58307637744b",
+        "version" : "2.1.0"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
