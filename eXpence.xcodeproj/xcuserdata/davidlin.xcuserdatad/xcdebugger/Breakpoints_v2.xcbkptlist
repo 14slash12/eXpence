@@ -63,53 +63,6 @@
             endingLineNumber = "376"
             landmarkName = "selectedAmount"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - 3a4fb6a3605e40e8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
-                  moduleName = "MyExpenses"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "352"
-                  endingLineNumber = "352"
-                  offsetFromSymbolStart = "716">
-               </Location>
-               <Location
-                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - caa3000e3c37d27f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (MyExpenses.AggregatedExpense) -&gt; Swift.Bool in MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
-                  moduleName = "MyExpenses"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "352"
-                  endingLineNumber = "352"
-                  offsetFromSymbolStart = "132">
-               </Location>
-               <Location
-                  uuid = "A567CE3A-B51F-447B-9FBF-6C5AA40976A2 - caa3000e3c37d27f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (MyExpenses.AggregatedExpense) -&gt; Swift.Bool in MyExpenses.ChartView.selectedAmount.getter : Swift.Optional&lt;Swift.Double&gt;"
-                  moduleName = "MyExpenses"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/davidlin/Developer/MyExpenses/MyExpenses/MainView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "352"
-                  endingLineNumber = "352"
-                  offsetFromSymbolStart = "272">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -154,8 +107,8 @@
             filePath = "eXpence/MainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
+            startingLineNumber = "556"
+            endingLineNumber = "556"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -164,47 +117,28 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "1565D7DE-87CC-4CB5-ABCD-191F7CAF3CDF"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "eXpence/MainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "660"
-            endingLineNumber = "660"
+            startingLineNumber = "803"
+            endingLineNumber = "803"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "98D425EF-E3C3-489B-90CF-2422C0C592F0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = ""
+            moduleName = "">
             <Locations>
-               <Location
-                  uuid = "1565D7DE-87CC-4CB5-ABCD-191F7CAF3CDF - c9d901b06fdd90e5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in eXpence.SettingsView.body.getter : some"
-                  moduleName = "eXpence"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/davidlin/Developer/eXpence/eXpence/MainView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "660"
-                  endingLineNumber = "660"
-                  offsetFromSymbolStart = "116">
-               </Location>
-               <Location
-                  uuid = "1565D7DE-87CC-4CB5-ABCD-191F7CAF3CDF - d102e8db47940011"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;RevenueCat.Offerings&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; () in closure #2 () -&gt; () in eXpence.SettingsView.body.getter : some"
-                  moduleName = "eXpence"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/davidlin/Developer/eXpence/eXpence/MainView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "661"
-                  endingLineNumber = "661"
-                  offsetFromSymbolStart = "184">
-               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

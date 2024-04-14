@@ -22,11 +22,11 @@ var sharedModelContainer: ModelContainer = {
         var categoryFetchDescriptor = FetchDescriptor<ExpenseCategory>()
         categoryFetchDescriptor.fetchLimit = 1
 
-        guard try container.mainContext.fetch(categoryFetchDescriptor).count == 1 else { return container }
+        guard try container.mainContext.fetch(categoryFetchDescriptor).count == 0 else { return container }
 
         // This code will only run if the persistent store is empty.
         let categories = [
-//                ExpenseCategory(name: "Groceries", symbol: "🛒"),
+            ExpenseCategory(name: "Groceries", symbol: "🛒"),
             ExpenseCategory(name: "Insurance", symbol: "🛡️"),
             ExpenseCategory(name: "Lunch", symbol: "🥗")
         ]

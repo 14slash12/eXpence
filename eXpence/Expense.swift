@@ -56,6 +56,8 @@ enum ExpensesSchemaV2: VersionedSchema {
         @Attribute(.unique) var name: String
         var symbol: String
 
+        @Relationship(deleteRule: .nullify, inverse: \Expense.category) var expenses = [Expense]()
+
         init(name: String, symbol: String) {
             self.name = name
             self.symbol = symbol
