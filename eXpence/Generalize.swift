@@ -50,6 +50,8 @@ let previewConstantContainer: ModelContainer = {
         
         let grocery = ExpenseCategory(name: "Groceries", symbol: "🛒")
 
+        container.mainContext.insert(grocery)
+
         let expenses = [
             Expense(name: "Rewe", amount: 10.0, timestamp: Date(), category: grocery),
             Expense(name: "Edeka", amount: 10.0, timestamp: yesterday, category: grocery),
@@ -66,6 +68,7 @@ let previewConstantContainer: ModelContainer = {
             Expense(name: "Rewe", amount: 10.0, timestamp: next2day, category: grocery),
             Expense(name: "Rewe", amount: 10.0, timestamp: next2day, category: grocery),
         ]
+
         for expense in expenses {
             container.mainContext.insert(expense)
         }

@@ -12,6 +12,7 @@ import WidgetKit
 import RevenueCat
 import EmojiPicker
 import Smile
+import UserNotifications
 
 struct ExpenseView: View {
     let expense: Expense
@@ -471,172 +472,185 @@ struct SettingsView: View {
 
     @State var currentOffering: Offering?
 
+    @AppStorage("notifications") var notifications: Bool = false
+
+    @AppStorage("notificationDate") var notificationDate = Date.now.timeIntervalSinceReferenceDate
+
+    @AppStorage("notificationInterval") var notificationInterval: NotificationInterval = .weekly
+
+    enum NotificationInterval: String, Hashable {
+        case daily
+        case weekly
+        case monthly
+    }
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button {
-                            dismiss()
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .foregroundStyle(.ultraThinMaterial)
-                                    .frame(width: .myLarge1)
-                                Image(systemName: "xmark")
-                                    .foregroundStyle(.gray)
-                            }
-                        }
-                        
-                    }
-                    HStack {
-                        Text("Settings")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding([.top, .bottom])
-                        Spacer()
-                    }
-                    
-                    
+                ScrollView {
                     VStack {
                         HStack {
-                            Text("Pro Features")
+                            Text("Settings")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding([.bottom])
+                            Spacer()
+                        }
+
+
+                        VStack {
+                            HStack {
+                                Text("Pro Features")
+                                    .fontDesign(.monospaced)
+                                    .font(.custom("Menlo", size: 21))
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                Image(systemName: "wand.and.stars")
+                                    .foregroundStyle(.purple)
+                                Spacer()
+                            }
+
+                            if userViewModel.isSubscriptionActive {
+                                Text("Thank you for being a Pro member! You'll be faster reaching your saving goals!")
+                            } else {
+
+                                HStack {
+                                    Text("Become a Pro member and get awesome features")
+                                    Spacer()
+                                }
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Image(systemName: "appwindow.swipe.rectangle")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Fantastic Home Screen Widgets")
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "list.number")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Exports to CSV files")
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "wand.and.stars")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Lifetime access")
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "heart.fill")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Support solo project for even more future pro features. Thank you!")
+                                            .frame(height: .myLarge1)
+
+                                    }
+                                }
+
+                                if let package = currentOffering?.availablePackages.first {
+                                    Button {
+                                        Purchases.shared.purchase(package: package) { (transaction, customerInfo, error, userCancelled) in
+                                            if customerInfo?.entitlements["Pro"]?.isActive == true {
+                                                // Unlock that great "pro" content
+                                                userViewModel.isSubscriptionActive = true
+                                            }
+                                        }
+                                    } label: {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                            Text("Become Pro for \(package.storeProduct.localizedPriceString)")
+                                                .foregroundStyle(.black)
+                                                .fontDesign(.monospaced)
+                                                .padding()
+                                        }
+                                    }
+                                    .shadow(color: .purple, radius: 10)
+                                    .padding([.leading, .trailing, .top])
+
+                                    Button("Restore Purchase") {
+                                        Task {
+                                            do {
+                                                let customerInfo: CustomerInfo = try await Purchases.shared.restorePurchases()
+                                                userViewModel.isSubscriptionActive = customerInfo.entitlements.all["Pro"]?.isActive == true
+                                            } catch {
+                                                print("Error restoring purchase")
+                                            }
+                                        }
+                                    }
+                                    .foregroundStyle(Color(.lightGray))
+                                }
+                            }
+                        }
+                        .padding()
+                        .foregroundStyle(colorScheme == .light ? .white : .black)
+                        .background {
+                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                .shadow(color: .purple, radius: 10)
+                        }
+
+                        Divider()
+
+                        HStack {
+                            Text("Customise Categories")
                                 .fontDesign(.monospaced)
                                 .font(.custom("Menlo", size: 21))
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            Image(systemName: "wand.and.stars")
-                                .foregroundStyle(.purple)
                             Spacer()
                         }
-                        
-                        if userViewModel.isSubscriptionActive {
-                            Text("Thank you for being a Pro member! You'll be faster reaching your saving goals!")
-                        } else {
-                            
-                            HStack {
-                                Text("Become a Pro member and get awesome features")
-                                Spacer()
-                            }
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Image(systemName: "appwindow.swipe.rectangle")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                        .background {
-                                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                                .foregroundStyle(Color(.primary))
-                                        }
-                                    Text("Fantastic Home Screen Widgets")
-                                }
-                                
-                                HStack {
-                                    Image(systemName: "list.number")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                        .background {
-                                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                                .foregroundStyle(Color(.primary))
-                                        }
-                                    Text("Exports to CSV files")
-                                }
-                                
-                                HStack {
-                                    Image(systemName: "wand.and.stars")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                        .background {
-                                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                                .foregroundStyle(Color(.primary))
-                                        }
-                                    Text("Lifetime access")
-                                }
-                                
-                                HStack {
-                                    Image(systemName: "heart.fill")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                        .background {
-                                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                                .foregroundStyle(Color(.primary))
-                                        }
-                                    Text("Support solo project for even more future pro features. Thank you!")
-                                        .frame(height: .myLarge1)
-                                    
-                                }
-                            }
-                            
-                            if let package = currentOffering?.availablePackages.first {
-                                Button {
-                                    Purchases.shared.purchase(package: package) { (transaction, customerInfo, error, userCancelled) in
-                                        if customerInfo?.entitlements["Pro"]?.isActive == true {
-                                            // Unlock that great "pro" content
-                                            userViewModel.isSubscriptionActive = true
-                                        }
-                                    }
+
+
+
+                        VStack (alignment: .leading) {
+                            ForEach(expenseCategories) { expenseCategory in
+                                NavigationLink {
+                                    CategoryView(category: expenseCategory)
                                 } label: {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                        Text("Become Pro for \(package.storeProduct.localizedPriceString)")
-                                            .foregroundStyle(.black)
-                                            .fontDesign(.monospaced)
-                                            .padding()
+                                    HStack {
+                                        //                                    if let symbol = expenseCategory.symbol {
+                                        Text(expenseCategory.symbol)
+                                        //                                    }
+
+                                        Text(expenseCategory.name)
+
+                                        Spacer()
+
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color(.lightGray))
                                     }
                                 }
-                                .shadow(color: .purple, radius: 10)
-                                .padding([.leading, .trailing, .top])
-                                
-                                Button("Restore Purchase") {
-                                    Task {
-                                        do {
-                                            let customerInfo: CustomerInfo = try await Purchases.shared.restorePurchases()
-                                            userViewModel.isSubscriptionActive = customerInfo.entitlements.all["Pro"]?.isActive == true
-                                        } catch {
-                                            print("Error restoring purchase")
-                                        }
-                                    }
-                                }
-                                .foregroundStyle(Color(.lightGray))
+                                .padding()
+                                .foregroundStyle(colorScheme == .light ? .black : .white)
                             }
-                        }
-                    }
-                    .padding()
-                    .foregroundStyle(colorScheme == .light ? .white : .black)
-                    .background {
-                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                            .shadow(color: .purple, radius: 10)
-                    }
-                    
-                    Divider()
-                    
-                    HStack {
-                        Text("Customise Categories")
-                            .fontDesign(.monospaced)
-                            .font(.custom("Menlo", size: 21))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    
-                    
-                    VStack (alignment: .leading) {
-                        ForEach(expenseCategories) { expenseCategory in
+
                             NavigationLink {
-                                CategoryView(category: expenseCategory)
+                                CategoryView(category: nil)
                             } label: {
                                 HStack {
-//                                    if let symbol = expenseCategory.symbol {
-                                    Text(expenseCategory.symbol)
-//                                    }
-
-                                    Text(expenseCategory.name)
+                                    Text("Add Category")
 
                                     Spacer()
 
-                                    Image(systemName: "chevron.right")
+                                    Image(systemName: "plus")
                                         .foregroundStyle(Color(.lightGray))
                                 }
                             }
@@ -644,176 +658,219 @@ struct SettingsView: View {
                             .foregroundStyle(colorScheme == .light ? .black : .white)
                         }
 
-                        NavigationLink {
-                            CategoryView(category: nil)
-                        } label: {
-                            HStack {
-                                Text("Add Category")
+                        Divider()
 
-                                Spacer()
+                        // Export
 
-                                Image(systemName: "plus")
-                                    .foregroundStyle(Color(.lightGray))
-                            }
-                        }
-                        .padding()
-                        .foregroundStyle(colorScheme == .light ? .black : .white)
-                    }
-                    
-                    
-                    
-                    
-                    
-                    
-                    Divider()
-                    
-                    // Export
-                    
-                    HStack {
-                        Text("Export")
-                            .fontDesign(.monospaced)
-                            .font(.custom("Menlo", size: 21))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    
-                    VStack {
                         HStack {
-                            VStack {
-                                DatePicker(selection: $start) {
-                                    HStack {
-                                        Image(systemName: "calendar")
-                                        Text("From")
-                                    }
-                                }
-                                DatePicker(selection: $end) {
-                                    HStack {
-                                        Image(systemName: "calendar")
-                                        Text("Until")
-                                    }
-                                }
-                            }
-                            .padding([.trailing])
-                            
-                            if userViewModel.isSubscriptionActive {
-                                ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
-                                    Image(systemName: "square.and.arrow.up")
-                                        .foregroundStyle(colorScheme == .light ? .white : .black)
-                                }
-                            } else {
-                                Image(systemName: "lock.fill")
-                                    .foregroundStyle(.red)
-                                    .shadow(color: .red, radius: 10)
-                            }
+                            Text("Export")
+                                .fontDesign(.monospaced)
+                                .font(.custom("Menlo", size: 21))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Spacer()
                         }
-                        .padding()
-                        .background {
-                            GeometryReader { geo in
-                                RoundedRectangle(cornerRadius: .myCornerRadius)
-                                    .foregroundStyle(Color(.primary))
-                                    .opacity(0.75)
-                                
-                                Rectangle()
-                                    .foregroundStyle(colorScheme == .light ? .black : .white)
-                                    .offset(x: geo.size.width - .myLarge1)
-                                    .clipShape(
-                                        .rect(
-                                            topLeadingRadius: 0,
-                                            bottomLeadingRadius: 0,
-                                            bottomTrailingRadius: .myCornerRadius,
-                                            topTrailingRadius: .myCornerRadius
-                                        )
-                                    )
+
+
+                        VStack {
+                            HStack {
+                                VStack {
+                                    DatePicker(selection: $start) {
+                                        HStack {
+                                            Image(systemName: "calendar")
+                                            Text("From")
+                                        }
+                                    }
+                                    DatePicker(selection: $end) {
+                                        HStack {
+                                            Image(systemName: "calendar")
+                                            Text("Until")
+                                        }
+                                    }
+                                }
+                                .padding([.trailing])
+
+                                if userViewModel.isSubscriptionActive {
+                                    ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
+                                        Image(systemName: "square.and.arrow.up")
+                                            .foregroundStyle(colorScheme == .light ? .white : .black)
+                                    }
+                                } else {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundStyle(.red)
+                                        .shadow(color: .red, radius: 10)
+                                }
                             }
+                            .padding()
+                            .background {
+                                GeometryReader { geo in
+                                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                                        .foregroundStyle(Color(.primary))
+                                        .opacity(0.75)
+
+                                    Rectangle()
+                                        .foregroundStyle(colorScheme == .light ? .black : .white)
+                                        .offset(x: geo.size.width - .myLarge1)
+                                        .clipShape(
+                                            .rect(
+                                                topLeadingRadius: 0,
+                                                bottomLeadingRadius: 0,
+                                                bottomTrailingRadius: .myCornerRadius,
+                                                topTrailingRadius: .myCornerRadius
+                                            )
+                                        )
+                                }
+                            }
+                            .padding([.bottom])
+                            .shadow(radius: 5)
+
+                            HStack {
+                                Button {
+                                    withAnimation {
+                                        guard let dates = filterDates(from: Date(), by: .week) else { return }
+                                        start = dates.start
+                                        end = dates.end
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("This week")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                        Image(systemName: "arrow.right")
+                                            .foregroundStyle(.white)
+                                            .padding([.trailing])
+                                    }
+                                    .background {
+                                        GeometryReader { geo in
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                                .opacity(0.75)
+
+                                            Rectangle()
+                                                .foregroundStyle(colorScheme == .light ? .black : .white)
+                                                .offset(x: geo.size.width - .myLarge1)
+                                                .clipShape(
+                                                    .rect(
+                                                        topLeadingRadius: 0,
+                                                        bottomLeadingRadius: 0,
+                                                        bottomTrailingRadius: .myCornerRadius,
+                                                        topTrailingRadius: .myCornerRadius
+                                                    )
+                                                )
+                                        }
+                                    }
+                                }
+                                .shadow(radius: 5)
+
+                                Button {
+                                    withAnimation {
+                                        guard let dates = filterDates(from: Date(), by: .month) else { return }
+                                        start = dates.start
+                                        end = dates.end
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("This month")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                        Image(systemName: "arrow.right")
+                                            .foregroundStyle(.white)
+                                            .padding([.trailing])
+                                    }
+                                    .background {
+                                        GeometryReader { geo in
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                                .opacity(0.75)
+
+                                            Rectangle()
+                                                .foregroundStyle(colorScheme == .light ? .black : .white)
+                                                .offset(x: geo.size.width - .myLarge1)
+                                                .clipShape(
+                                                    .rect(
+                                                        topLeadingRadius: 0,
+                                                        bottomLeadingRadius: 0,
+                                                        bottomTrailingRadius: .myCornerRadius,
+                                                        topTrailingRadius: .myCornerRadius
+                                                    )
+                                                )
+                                        }
+                                    }
+                                }
+                                .shadow(radius: 5)
+                            }
+
+
+
+
                         }
                         .padding([.bottom])
-                        .shadow(radius: 5)
-                        
+
+                        Divider()
+
                         HStack {
-                            Button {
-                                withAnimation {
-                                    guard let dates = filterDates(from: Date(), by: .week) else { return }
-                                    start = dates.start
-                                    end = dates.end
-                                }
-                            } label: {
-                                HStack {
-                                    Text("This week")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                    Image(systemName: "arrow.right")
-                                        .foregroundStyle(.white)
-                                        .padding([.trailing])
-                                }
-                                .background {
-                                    GeometryReader { geo in
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                            .opacity(0.75)
-                                        
-                                        Rectangle()
-                                            .foregroundStyle(colorScheme == .light ? .black : .white)
-                                            .offset(x: geo.size.width - .myLarge1)
-                                            .clipShape(
-                                                .rect(
-                                                    topLeadingRadius: 0,
-                                                    bottomLeadingRadius: 0,
-                                                    bottomTrailingRadius: .myCornerRadius,
-                                                    topTrailingRadius: .myCornerRadius
-                                                )
-                                            )
-                                    }
-                                }
+                            Text("Notifications")
+                                .fontDesign(.monospaced)
+                                .font(.custom("Menlo", size: 21))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Spacer()
+                        }
+
+                        VStack {
+                            Toggle(isOn: $notifications.animation()) {
+                                Text("Remind me")
                             }
-                            .shadow(radius: 5)
-                            
-                            Button {
-                                withAnimation {
-                                    guard let dates = filterDates(from: Date(), by: .month) else { return }
-                                    start = dates.start
-                                    end = dates.end
+
+                            if notifications {
+
+                                Picker(selection: $notificationInterval) {
+                                    Text("Daily")
+                                        .tag(NotificationInterval.daily)
+
+                                    Text("Weekly")
+                                        .tag(NotificationInterval.weekly)
+
+                                    Text("Monthly")
+                                        .tag(NotificationInterval.monthly)
+                                } label: { EmptyView() }
+                                .labelsHidden()
+                                .pickerStyle(.segmented)
+                                .padding([.top, .bottom])
+
+                                DatePicker(selection: 
+                                            Binding(get: {
+                                   return Date(timeIntervalSinceReferenceDate: notificationDate)
+                                }, set: { newValue in
+                                    notificationDate = newValue.timeIntervalSinceReferenceDate})
+                                ) {
+                                    Text("Starting from")
                                 }
-                            } label: {
-                                HStack {
-                                    Text("This month")
-                                        .foregroundStyle(.black)
-                                        .padding()
-                                    Image(systemName: "arrow.right")
-                                        .foregroundStyle(.white)
-                                        .padding([.trailing])
-                                }
-                                .background {
-                                    GeometryReader { geo in
-                                        RoundedRectangle(cornerRadius: .myCornerRadius)
-                                            .foregroundStyle(Color(.primary))
-                                            .opacity(0.75)
-                                        
-                                        Rectangle()
-                                            .foregroundStyle(colorScheme == .light ? .black : .white)
-                                            .offset(x: geo.size.width - .myLarge1)
-                                            .clipShape(
-                                                .rect(
-                                                    topLeadingRadius: 0,
-                                                    bottomLeadingRadius: 0,
-                                                    bottomTrailingRadius: .myCornerRadius,
-                                                    topTrailingRadius: .myCornerRadius
-                                                )
-                                            )
-                                    }
-                                }
+                                .padding(.bottom)
                             }
-                            .shadow(radius: 5)
                         }
                     }
-                    .padding([.bottom])
+                    .padding()
+                    .onAppear {
+                        datesToThisWeek()
+                    }
                 }
-                .padding()
-                .onAppear {
-                    datesToThisWeek()
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            dismiss()
+                        } label: {
+                            ZStack {
+                                Circle()
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .frame(width: .myLarge1)
+
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.gray)
+                            }
+                        }
+                    }
                 }
-            }
             .onAppear {
                 Purchases.shared.getOfferings { offerings, error in
                     if let offer = offerings?.current, error == nil {
@@ -821,6 +878,79 @@ struct SettingsView: View {
                     }
                 }
             }
+            .onChange(of: notifications) { _, newValue in
+                if newValue {
+                    notificationDate = Date.now.timeIntervalSinceReferenceDate
+                    notificationInterval = .weekly
+                    handleNotificationPermissions()
+                } else {
+                    cancelNotifications()
+                }
+            }
+            .onChange(of: notificationDate) { _, newValue in
+                cancelNotifications()
+                updateNotifications()
+            }
+            .onChange(of: notificationInterval) { _, newValue in
+                cancelNotifications()
+                updateNotifications()
+            }
+        }
+    }
+
+    private func cancelNotifications() {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+
+    private func handleNotificationPermissions() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                updateNotifications()
+            } else if let error {
+                print("Error: We got no permissions for notifications \n \(String(describing: error))")
+            }
+        }
+    }
+
+    private func updateNotifications() {
+        let content = UNMutableNotificationContent()
+        content.title = "Feed the dog"
+        content.subtitle = "The dog is hungry"
+        content.sound = .default
+        
+        guard let notificationTriggerDateComponents = notificationDateComponents() else {
+            print("No notification was added")
+            return
+        }
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: notificationTriggerDateComponents, repeats: true)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
+        print("Notification was added")
+
+    }
+
+    private func notificationDateComponents() -> DateComponents? {
+        let notificationTriggerDate = Date(timeIntervalSinceReferenceDate: notificationDate)
+
+        switch notificationInterval {
+        case .daily:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .day, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.hour, .minute], from: nextTriggerDate)
+        case .weekly:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.day, .hour, .minute], from: nextTriggerDate)
+        case .monthly:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .month, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.weekOfYear, .day, .hour, .minute], from: nextTriggerDate)
         }
     }
 

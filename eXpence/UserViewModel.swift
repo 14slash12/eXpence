@@ -11,9 +11,15 @@ import RevenueCat
 class UserViewModel: ObservableObject {
     @Published var isSubscriptionActive = false
 
+    var isPreview: Bool {
+        return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    }
+
     init() {
-        Purchases.shared.getCustomerInfo { customerInfo, error in
-            self.isSubscriptionActive = customerInfo?.entitlements.all["Pro"]?.isActive == true
+        if !isPreview {
+            Purchases.shared.getCustomerInfo { customerInfo, error in
+                self.isSubscriptionActive = customerInfo?.entitlements.all["Pro"]?.isActive == true
+            }
         }
     }
 }
