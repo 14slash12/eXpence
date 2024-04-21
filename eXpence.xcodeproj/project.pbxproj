@@ -25,6 +25,11 @@
 		1FA983D22BB0AD16005E8A31 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA983D12BB0AD16005E8A31 /* StoreKit.framework */; };
 		1FA983D42BB0BC1A005E8A31 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */; };
 		1FA983D52BB0BDBC005E8A31 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */; };
+		1FB748E82BD4743700A440F1 /* ElegantEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB748E72BD4743700A440F1 /* ElegantEmojiPicker */; };
+		1FB748EA2BD4745E00A440F1 /* ElegantEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB748E92BD4745E00A440F1 /* ElegantEmojiPicker */; };
+		1FB748ED2BD4762600A440F1 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB748EC2BD4762600A440F1 /* MCEmojiPicker */; };
+		1FB748EF2BD4763000A440F1 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB748EE2BD4763000A440F1 /* MCEmojiPicker */; };
+		1FB748F12BD550C700A440F1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1FB748F02BD550C700A440F1 /* Localizable.xcstrings */; };
 		1FF1D38D2BAF533900BA17A0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF841D92BAF476400CE534C /* WidgetKit.framework */; };
 		1FF1D38E2BAF533900BA17A0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FF841DB2BAF476400CE534C /* SwiftUI.framework */; };
 		1FF1D3912BAF533900BA17A0 /* eXpenceWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF1D3902BAF533900BA17A0 /* eXpenceWidgetBundle.swift */; };
@@ -91,6 +96,7 @@
 		1FA264372B9BA3EB000A46BE /* Generalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalize.swift; sourceTree = "<group>"; };
 		1FA983D12BB0AD16005E8A31 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1FA983D32BB0BC1A005E8A31 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1FB748F02BD550C700A440F1 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1FF1D38C2BAF533900BA17A0 /* eXpenceWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = eXpenceWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF1D3902BAF533900BA17A0 /* eXpenceWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWidgetBundle.swift; sourceTree = "<group>"; };
 		1FF1D3922BAF533900BA17A0 /* eXpenceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eXpenceWidget.swift; sourceTree = "<group>"; };
@@ -107,6 +113,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB748EA2BD4745E00A440F1 /* ElegantEmojiPicker in Frameworks */,
+				1FB748ED2BD4762600A440F1 /* MCEmojiPicker in Frameworks */,
 				1F02B35B2BCC630700747842 /* EmojiPicker in Frameworks */,
 				1FA983D22BB0AD16005E8A31 /* StoreKit.framework in Frameworks */,
 				1F0DE75F2BB0C361009C8365 /* RevenueCat in Frameworks */,
@@ -132,9 +140,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FF1D38E2BAF533900BA17A0 /* SwiftUI.framework in Frameworks */,
+				1FB748E82BD4743700A440F1 /* ElegantEmojiPicker in Frameworks */,
 				1F02B35D2BCC634C00747842 /* EmojiPicker in Frameworks */,
 				1FF1D38D2BAF533900BA17A0 /* WidgetKit.framework in Frameworks */,
 				1F0DE76D2BB0C42E009C8365 /* RevenueCat in Frameworks */,
+				1FB748EF2BD4763000A440F1 /* MCEmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +154,7 @@
 		1FA263FC2B9B9993000A46BE = {
 			isa = PBXGroup;
 			children = (
+				1FB748F02BD550C700A440F1 /* Localizable.xcstrings */,
 				1FF1D3A12BAF60AE00BA17A0 /* Context.swift */,
 				1FF1D39E2BAF546500BA17A0 /* eXpenceWidgetExtension.entitlements */,
 				1FA264072B9B9994000A46BE /* eXpence */,
@@ -248,6 +259,8 @@
 			packageProductDependencies = (
 				1F0DE75E2BB0C361009C8365 /* RevenueCat */,
 				1F02B35A2BCC630700747842 /* EmojiPicker */,
+				1FB748E92BD4745E00A440F1 /* ElegantEmojiPicker */,
+				1FB748EC2BD4762600A440F1 /* MCEmojiPicker */,
 			);
 			productName = MyExpenses;
 			productReference = 1FA264052B9B9994000A46BE /* eXpence.app */;
@@ -305,6 +318,8 @@
 			packageProductDependencies = (
 				1F0DE76C2BB0C42E009C8365 /* RevenueCat */,
 				1F02B35C2BCC634C00747842 /* EmojiPicker */,
+				1FB748E72BD4743700A440F1 /* ElegantEmojiPicker */,
+				1FB748EE2BD4763000A440F1 /* MCEmojiPicker */,
 			);
 			productName = eXpenceWidgetExtension;
 			productReference = 1FF1D38C2BAF533900BA17A0 /* eXpenceWidgetExtension.appex */;
@@ -343,11 +358,14 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 1FA263FC2B9B9993000A46BE;
 			packageReferences = (
 				1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */,
 				1F971CD82BCC620A0049F9CA /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+				1FB748E62BD4740E00A440F1 /* XCRemoteSwiftPackageReference "Elegant-Emoji-Picker" */,
+				1FB748EB2BD475C600A440F1 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
 			);
 			productRefGroup = 1FA264062B9B9994000A46BE /* Products */;
 			projectDirPath = "";
@@ -368,6 +386,7 @@
 			files = (
 				1FA264132B9B9998000A46BE /* Preview Assets.xcassets in Resources */,
 				1FA2640F2B9B9998000A46BE /* Assets.xcassets in Resources */,
+				1FB748F12BD550C700A440F1 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,6 +893,22 @@
 				minimumVersion = 4.39.0;
 			};
 		};
+		1FB748E62BD4740E00A440F1 /* XCRemoteSwiftPackageReference "Elegant-Emoji-Picker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Finalet/Elegant-Emoji-Picker";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		1FB748EB2BD475C600A440F1 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -896,6 +931,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1FA983D02BB0AC73005E8A31 /* XCRemoteSwiftPackageReference "purchases-ios" */;
 			productName = RevenueCat;
+		};
+		1FB748E72BD4743700A440F1 /* ElegantEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB748E62BD4740E00A440F1 /* XCRemoteSwiftPackageReference "Elegant-Emoji-Picker" */;
+			productName = ElegantEmojiPicker;
+		};
+		1FB748E92BD4745E00A440F1 /* ElegantEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB748E62BD4740E00A440F1 /* XCRemoteSwiftPackageReference "Elegant-Emoji-Picker" */;
+			productName = ElegantEmojiPicker;
+		};
+		1FB748EC2BD4762600A440F1 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB748EB2BD475C600A440F1 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+		1FB748EE2BD4763000A440F1 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB748EB2BD475C600A440F1 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

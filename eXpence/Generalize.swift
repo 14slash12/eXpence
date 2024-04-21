@@ -161,6 +161,10 @@ extension Date {
     }
 }
 
+extension String {
+    static let localizable = "Localizable"
+}
+
 enum K {
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
