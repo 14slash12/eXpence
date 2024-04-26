@@ -22,16 +22,24 @@ var sharedModelContainer: ModelContainer = {
         var categoryFetchDescriptor = FetchDescriptor<ExpenseCategory>()
         categoryFetchDescriptor.fetchLimit = 1
 
-        guard try container.mainContext.fetch(categoryFetchDescriptor).count == 1 else { return container }
+        guard try container.mainContext.fetch(categoryFetchDescriptor).count == 0 else { return container }
 
         // This code will only run if the persistent store is empty.
-        let categories = [
-//                ExpenseCategory(name: "Groceries", symbol: "🛒"),
-            ExpenseCategory(name: "Insurance", symbol: "🛡️"),
-            ExpenseCategory(name: "Lunch", symbol: "🥗")
+        let standardCategories = [
+            ExpenseCategory(name: String(localized: "Groceries", table: .localizable), symbol: "🛒"),
+            ExpenseCategory(name: String(localized: "Insurance", table: .localizable), symbol: "🛡️"),
+            ExpenseCategory(name: String(localized: "Restaurant", table: .localizable), symbol: "🥙"),
+            ExpenseCategory(name: String(localized: "Fitness", table: .localizable), symbol: "🏃"),
+            ExpenseCategory(name: String(localized: "Pet Care", table: .localizable), symbol: "🐾"),
+            ExpenseCategory(name: String(localized: "Rent", table: .localizable), symbol: "🏡"),
+            ExpenseCategory(name: String(localized: "Shopping", table: .localizable), symbol: "🛍️"),
+            ExpenseCategory(name: String(localized: "Technology", table: .localizable), symbol: "📱"),
+            ExpenseCategory(name: String(localized: "Entertainment", table: .localizable), symbol: "🖥️"),
+            ExpenseCategory(name: String(localized: "Utilities", table: .localizable), symbol: "💡"),
+            ExpenseCategory(name: String(localized: "Mobility", table: .localizable), symbol: "🚗"),
         ]
 
-        for category in categories {
+        for category in standardCategories {
             container.mainContext.insert(category)
         }
 

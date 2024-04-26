@@ -9,6 +9,9 @@ import SwiftUI
 import SwiftData
 import Charts
 import WidgetKit
+import RevenueCat
+import UserNotifications
+import MCEmojiPicker
 
 struct ExpenseView: View {
     let expense: Expense
@@ -52,7 +55,7 @@ struct SumView: View {
         case decreased
     }
 
-    init(filter: Predicate<Expense> = #Predicate { _ in true}, sort: SortDescriptor<Expense>, specialDate: Binding<SpecialDate>) {
+    init(filter: Predicate<Expense>, sort: SortDescriptor<Expense>, specialDate: Binding<SpecialDate>) {
         _expenses = Query(filter: filter, sort: [sort])
         _specialDate = specialDate
     }
@@ -64,7 +67,7 @@ struct SumView: View {
     private func sumView() -> some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Total spending")
+                Text("Total spending", tableName: .localizable)
                     .foregroundStyle(colorScheme == .light ? Color(.lightGray) : .black)
 
                 Text(sumText)
@@ -196,7 +199,7 @@ struct ListView: View {
     @Query private var expenses: [Expense]
     @Binding var editExpense: Expense?
 
-    init(filter: Predicate<Expense> = #Predicate { _ in true}, sort: SortDescriptor<Expense>, editExpense: Binding<Expense?>) {
+    init(filter: Predicate<Expense>, sort: SortDescriptor<Expense>, editExpense: Binding<Expense?>) {
         _expenses = Query(filter: filter, sort: [sort])
         _editExpense = editExpense
     }
@@ -341,14 +344,13 @@ struct DateAdjustView: View {
         case .day:
             result += K.dateFormatter.string(from: specialDate.date)
         case .week:
-            result += "Week \(Calendar.current.component(.weekOfYear, from: specialDate.date))"
+            result += String(localized: "Week \(Calendar.current.component(.weekOfYear, from: specialDate.date))", table: .localizable)
         case .month:
-            result += "Month \(Calendar.current.component(.month, from: specialDate.date))"
-
+            result += String(localized: "Month \(Calendar.current.component(.month, from: specialDate.date))", table: .localizable)
         }
         
         if showYear {
-            result += " of \(Calendar.current.component(.year, from: specialDate.date))"
+            result += String(localized: " of \(Calendar.current.component(.year, from: specialDate.date))", table: .localizable)
         }
 
         return result
@@ -359,271 +361,591 @@ struct DateAdjustView: View {
     }
 }
 
+struct CategoryView: View {
+    @Environment(\.modelContext) var modelContext
+    @Environment(\.dismiss) var dismiss
+    let category: ExpenseCategory?
+
+    private var editorTitle: String {
+        category == nil ? String(localized: "Add Category", table: .localizable) : String(localized: "Edit Category", table: .localizable)
+    }
+    
+    @State var name: String = ""
+    @State var symbol: String = "💵"
+    @State var displayEmojiPicker: Bool = false
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Name", tableName: .localizable)
+                .foregroundStyle(Color(.lightGray))
+            TextField("Name", text: $name)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: .myCornerRadius/2)
+                        .foregroundStyle(Color(.lightGray))
+                        .opacity(0.25)
+                }
+
+            Text("Select a emoji", tableName: .localizable)
+                .foregroundStyle(Color(.lightGray))
+            Button(symbol) {
+                displayEmojiPicker.toggle()
+            }
+            .emojiPicker(
+                isPresented: $displayEmojiPicker,
+                selectedEmoji: $symbol
+            )
+
+            HStack {
+                Spacer()
+                if let category {
+                    Button {
+                        modelContext.delete(category)
+                        dismiss()
+                    } label: {
+                        Label {
+                            Text("Delete", tableName: .localizable)
+                        } icon: {
+                            Image(systemName: "trash")
+                        }
+                        .foregroundStyle(.red)
+                    }
+                }
+                Spacer()
+            }
+            .padding([.top])
+        }
+        .padding()
+        .navigationTitle(editorTitle)
+        .onAppear {
+            if let category {
+                name = category.name
+                symbol = category.symbol
+            }
+        }
+        .toolbar {
+            ToolbarItem {
+                Button(String(localized: "Save", table: .localizable)) {
+                    withAnimation {
+                        save()
+                        dismiss()
+                    }
+                }
+                .disabled(name.isEmpty || symbol.isEmpty)
+            }
+        }
+    }
+
+    private func save() {
+        if let category {
+            category.name = name
+            category.symbol = symbol
+        } else {
+            let newCategory = ExpenseCategory(name: name, symbol: symbol)
+            modelContext.insert(newCategory)
+        }
+    }
+}
+
 struct SettingsView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var userViewModel: UserViewModel
     @State var start: Date = Date()
     @State var end: Date = Date()
 
+    @Query var expenseCategories: [ExpenseCategory]
+
+    @State var currentOffering: Offering?
+
+    @AppStorage("notifications") var notifications: Bool = false
+
+    @AppStorage("notificationDate") var notificationDate = Date.now.timeIntervalSinceReferenceDate
+
+    @AppStorage("notificationInterval") var notificationInterval: NotificationInterval = .weekly
+
+    enum NotificationInterval: String, Hashable {
+        case daily
+        case weekly
+        case monthly
+    }
+
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        ZStack {
-                            Circle()
-                                .foregroundStyle(.ultraThinMaterial)
-                                .frame(width: .myLarge1)
-                            Image(systemName: "xmark")
-                                .foregroundStyle(.gray)
-                        }
-                    }
-
-                }
-                HStack {
-                    Text("Settings")
-                        .font(.title)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .padding([.top, .bottom])
-                    Spacer()
-                }
-
-                VStack {
-                    HStack {
-                        Text("Pro Features")
-                            .fontDesign(.monospaced)
-                            .font(.custom("Menlo", size: 21))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Image(systemName: "wand.and.stars")
-                            .foregroundStyle(.purple)
-                        Spacer()
-                    }
-                    HStack {
-                        Text("Become a Pro member and get awesome features")
-                        Spacer()
-                    }
-                    VStack(alignment: .leading) {
+        NavigationStack {
+                ScrollView {
+                    VStack {
                         HStack {
-                            Image(systemName: "appwindow.swipe.rectangle")
-                                .foregroundStyle(.black)
-                                .padding()
-                                .background {
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                }
-                            Text("Fantastic Home Screen Widgets")
+                            Text("Settings", tableName: .localizable)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding([.bottom])
+                            Spacer()
                         }
 
-                        HStack {
-                            Image(systemName: "list.number")
-                                .foregroundStyle(.black)
-                                .padding()
-                                .background {
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                }
-                            Text("Exports to CSV files")
-                        }
 
-                        HStack {
-                            Image(systemName: "wand.and.stars")
-                                .foregroundStyle(.black)
-                                .padding()
-                                .background {
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                }
-                            Text("Lifetime access")
-                        }
-
-                        HStack {
-                            Image(systemName: "heart.fill")
-                                .foregroundStyle(.black)
-                                .padding()
-                                .background {
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                }
-                            Text("Support solo project for even more future pro features. Thank you!")
-                                .frame(height: .myLarge1)
-
-                        }
-                    }
-
-                    Button {
-
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                .foregroundStyle(Color(.primary))
-                            Text("Become Pro")
-                                .foregroundStyle(.black)
-                                .fontDesign(.monospaced)
-                                .padding()
-                        }
-                    }
-                    .shadow(color: .purple, radius: 10)
-                    .padding([.leading, .trailing, .top])
-
-                    Button("Restore Purchase") {
-
-                    }
-                    .foregroundStyle(Color(.lightGray))
-                }
-                .padding()
-                .foregroundStyle(colorScheme == .light ? .white : .black)
-                .background {
-                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                        .shadow(color: .purple, radius: 10)
-                }
-
-                Divider()
-
-                // Export
-
-                HStack {
-                    Text("Export")
-                        .fontDesign(.monospaced)
-                        .font(.custom("Menlo", size: 21))
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    Spacer()
-                }
-
-
-                VStack {
-                    HStack {
                         VStack {
-                            DatePicker(selection: $start) {
-                                HStack {
-                                    Image(systemName: "calendar")
-                                    Text("From")
-                                }
+                            HStack {
+                                Text("Pro Features", tableName: .localizable)
+                                    .fontDesign(.monospaced)
+                                    .font(.custom("Menlo", size: 21))
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                Image(systemName: "wand.and.stars")
+                                    .foregroundStyle(.purple)
+                                Spacer()
                             }
-                            DatePicker(selection: $end) {
-                                HStack {
-                                    Image(systemName: "calendar")
-                                    Text("Until")
-                                }
-                            }
-                        }
-                        .padding([.trailing])
 
-                        ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
-                            Image(systemName: "square.and.arrow.up")
-                                .foregroundStyle(colorScheme == .light ? .white : .black)
+                            if userViewModel.isSubscriptionActive {
+                                Text("Thank you for being a Pro member! You'll be faster reaching your saving goals!", tableName: .localizable)
+                            } else {
+
+                                HStack {
+                                    Text("Become a Pro member and get awesome features", tableName: .localizable)
+                                    Spacer()
+                                }
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Image(systemName: "appwindow.swipe.rectangle")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Fantastic Home Screen Widgets", tableName: .localizable)
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "list.number")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Exports to CSV files", tableName: .localizable)
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "wand.and.stars")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Lifetime access", tableName: .localizable)
+                                    }
+
+                                    HStack {
+                                        Image(systemName: "heart.fill")
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                            .background {
+                                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                    .foregroundStyle(Color(.primary))
+                                            }
+                                        Text("Support solo project for even more future pro features. Thank you!", tableName: .localizable)
+                                            .frame(height: .myLarge1)
+
+                                    }
+                                }
+
+                                if let package = currentOffering?.availablePackages.first {
+                                    Button {
+                                        Purchases.shared.purchase(package: package) { (transaction, customerInfo, error, userCancelled) in
+                                            if customerInfo?.entitlements["Pro"]?.isActive == true {
+                                                // Unlock that great "pro" content
+                                                userViewModel.isSubscriptionActive = true
+                                            }
+                                        }
+                                    } label: {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                            Text("Become Pro for \(package.storeProduct.localizedPriceString)", tableName: .localizable)
+                                                .foregroundStyle(.black)
+                                                .fontDesign(.monospaced)
+                                                .padding()
+                                        }
+                                    }
+                                    .shadow(color: .purple, radius: 10)
+                                    .padding([.leading, .trailing, .top])
+
+                                    Button(String(localized: "Restore Purchase", table: .localizable)) {
+                                        Task {
+                                            do {
+                                                let customerInfo: CustomerInfo = try await Purchases.shared.restorePurchases()
+                                                userViewModel.isSubscriptionActive = customerInfo.entitlements.all["Pro"]?.isActive == true
+                                            } catch {
+                                                print("Error restoring purchase")
+                                            }
+                                        }
+                                    }
+                                    .foregroundStyle(Color(.lightGray))
+                                }
+                            }
                         }
+                        .padding()
+                        .foregroundStyle(colorScheme == .light ? .white : .black)
+                        .background {
+                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                .shadow(color: .purple, radius: 10)
+                        }
+
+                        Divider()
+
+                        HStack {
+                            Text("Customise Categories", tableName: .localizable)
+                                .fontDesign(.monospaced)
+                                .font(.custom("Menlo", size: 21))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Spacer()
+                        }
+
+
+
+                        VStack (alignment: .leading) {
+                            ForEach(expenseCategories) { expenseCategory in
+                                NavigationLink {
+                                    CategoryView(category: expenseCategory)
+                                } label: {
+                                    HStack {
+                                        //                                    if let symbol = expenseCategory.symbol {
+                                        Text(expenseCategory.symbol)
+                                        //                                    }
+
+                                        Text(expenseCategory.name)
+
+                                        Spacer()
+
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(Color(.lightGray))
+                                    }
+                                }
+                                .padding()
+                                .foregroundStyle(colorScheme == .light ? .black : .white)
+                            }
+
+                            NavigationLink {
+                                CategoryView(category: nil)
+                            } label: {
+                                HStack {
+                                    Text("Add Category", tableName: .localizable)
+
+                                    Spacer()
+
+                                    Image(systemName: "plus")
+                                        .foregroundStyle(Color(.lightGray))
+                                }
+                            }
+                            .padding()
+                            .foregroundStyle(colorScheme == .light ? .black : .white)
+                        }
+
+                        Divider()
+
+                        // Export
+
+                        HStack {
+                            Text("Export", tableName: .localizable)
+                                .fontDesign(.monospaced)
+                                .font(.custom("Menlo", size: 21))
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Spacer()
+                        }
+
+
+                        VStack {
+                            HStack {
+                                VStack {
+                                    DatePicker(selection: $start) {
+                                        Text("From", tableName: .localizable)
+                                    }
+                                    DatePicker(selection: $end) {
+                                        Text("Until", tableName: .localizable)
+                                    }
+                                }
+                                .tint(.purple)
+                                .padding([.trailing])
+
+                                if userViewModel.isSubscriptionActive {
+                                    ShareLink(item: generateURL() ?? URL(fileURLWithPath: "")) {
+                                        Image(systemName: "square.and.arrow.up")
+                                            .foregroundStyle(colorScheme == .light ? .white : .black)
+                                    }
+                                } else {
+                                    Image(systemName: "lock.fill")
+                                        .foregroundStyle(.red)
+                                        .shadow(color: .red, radius: 10)
+                                }
+                            }
+                            .padding()
+                            .background {
+                                GeometryReader { geo in
+                                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                                        .foregroundStyle(Color(.primary))
+                                        .opacity(0.75)
+
+                                    Rectangle()
+                                        .foregroundStyle(colorScheme == .light ? .black : .white)
+                                        .offset(x: geo.size.width - .myLarge1)
+                                        .clipShape(
+                                            .rect(
+                                                topLeadingRadius: 0,
+                                                bottomLeadingRadius: 0,
+                                                bottomTrailingRadius: .myCornerRadius,
+                                                topTrailingRadius: .myCornerRadius
+                                            )
+                                        )
+                                }
+                            }
+                            .padding([.bottom])
+                            .shadow(radius: 5)
+
+                            HStack {
+                                Button {
+                                    withAnimation {
+                                        guard let dates = filterDates(from: Date(), by: .week) else { return }
+                                        start = dates.start
+                                        end = dates.end
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("This week", tableName: .localizable)
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                        Image(systemName: "arrow.right")
+                                            .foregroundStyle(.white)
+                                            .padding([.trailing])
+                                    }
+                                    .background {
+                                        GeometryReader { geo in
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                                .opacity(0.75)
+
+                                            Rectangle()
+                                                .foregroundStyle(colorScheme == .light ? .black : .white)
+                                                .offset(x: geo.size.width - .myLarge1)
+                                                .clipShape(
+                                                    .rect(
+                                                        topLeadingRadius: 0,
+                                                        bottomLeadingRadius: 0,
+                                                        bottomTrailingRadius: .myCornerRadius,
+                                                        topTrailingRadius: .myCornerRadius
+                                                    )
+                                                )
+                                        }
+                                    }
+                                }
+                                .shadow(radius: 5)
+
+                                Button {
+                                    withAnimation {
+                                        guard let dates = filterDates(from: Date(), by: .month) else { return }
+                                        start = dates.start
+                                        end = dates.end
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text("This month", tableName: .localizable)
+                                            .foregroundStyle(.black)
+                                            .padding()
+                                        Image(systemName: "arrow.right")
+                                            .foregroundStyle(.white)
+                                            .padding([.trailing])
+                                    }
+                                    .background {
+                                        GeometryReader { geo in
+                                            RoundedRectangle(cornerRadius: .myCornerRadius)
+                                                .foregroundStyle(Color(.primary))
+                                                .opacity(0.75)
+
+                                            Rectangle()
+                                                .foregroundStyle(colorScheme == .light ? .black : .white)
+                                                .offset(x: geo.size.width - .myLarge1)
+                                                .clipShape(
+                                                    .rect(
+                                                        topLeadingRadius: 0,
+                                                        bottomLeadingRadius: 0,
+                                                        bottomTrailingRadius: .myCornerRadius,
+                                                        topTrailingRadius: .myCornerRadius
+                                                    )
+                                                )
+                                        }
+                                    }
+                                }
+                                .shadow(radius: 5)
+                            }
+
+
+
+
+                        }
+                        .padding([.bottom])
+
+                        Divider()
+
+                        HStack {
+                            Text("Notifications", tableName: .localizable)
+                                .fontDesign(.monospaced)
+                                .font(.custom("Menlo", size: 21))
+                                .font(.title2)
+                                .fontWeight(.bold)
+
+                            Spacer()
+                        }
+
+                        VStack {
+                            Toggle(isOn: $notifications.animation()) {
+                                Text("Remind me", tableName: .localizable)
+                            }
+                            .tint(.purple)
+
+                            if notifications {
+                                Picker(selection: $notificationInterval) {
+                                    Text("Daily", tableName: .localizable)
+                                        .tag(NotificationInterval.daily)
+
+                                    Text("Weekly", tableName: .localizable)
+                                        .tag(NotificationInterval.weekly)
+
+                                    Text("Monthly", tableName: .localizable)
+                                        .tag(NotificationInterval.monthly)
+                                } label: { EmptyView() }
+                                .labelsHidden()
+                                .pickerStyle(.segmented)
+                                .padding([.top, .bottom])
+
+                                DatePicker(selection: 
+                                            Binding(get: {
+                                   return Date(timeIntervalSinceReferenceDate: notificationDate)
+                                }, set: { newValue in
+                                    notificationDate = newValue.timeIntervalSinceReferenceDate})
+                                ) {
+                                    Text("Starting from", tableName: .localizable)
+                                }
+                                .tint(.purple)
+                                .padding(.bottom)
+                            }
+                        }
+
+                        .padding()
+                        .background {
+                            GeometryReader { geo in
+                                RoundedRectangle(cornerRadius: .myCornerRadius)
+                                    .foregroundStyle(Color(.primary))
+                                    .opacity(0.75)
+                            }
+                        }
+                        .shadow(radius: 5)
+
                     }
                     .padding()
-                    .background {
-                        GeometryReader { geo in
-                            RoundedRectangle(cornerRadius: .myCornerRadius)
-                                .foregroundStyle(Color(.primary))
-                                .opacity(0.75)
-
-                            Rectangle()
-                                .foregroundStyle(colorScheme == .light ? .black : .white)
-                                .offset(x: geo.size.width - .myLarge1)
-                                .clipShape(
-                                    .rect(
-                                        topLeadingRadius: 0,
-                                        bottomLeadingRadius: 0,
-                                        bottomTrailingRadius: .myCornerRadius,
-                                        topTrailingRadius: .myCornerRadius
-                                    )
-                                )
-                        }
-                    }
-                    .padding([.bottom])
-                    .shadow(radius: 5)
-
-                    HStack {
-                        Button {
-                            withAnimation {
-                                guard let dates = filterDates(from: Date(), by: .week) else { return }
-                                start = dates.start
-                                end = dates.end
-                            }
-                        } label: {
-                            HStack {
-                                Text("This week")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                Image(systemName: "arrow.right")
-                                    .foregroundStyle(.white)
-                                    .padding([.trailing])
-                            }
-                            .background {
-                                GeometryReader { geo in
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                        .opacity(0.75)
-
-                                    Rectangle()
-                                        .foregroundStyle(colorScheme == .light ? .black : .white)
-                                        .offset(x: geo.size.width - .myLarge1)
-                                        .clipShape(
-                                            .rect(
-                                                topLeadingRadius: 0,
-                                                bottomLeadingRadius: 0,
-                                                bottomTrailingRadius: .myCornerRadius,
-                                                topTrailingRadius: .myCornerRadius
-                                            )
-                                        )
-                                }
-                            }
-                        }
-                        .shadow(radius: 5)
-
-                        Button {
-                            withAnimation {
-                                guard let dates = filterDates(from: Date(), by: .month) else { return }
-                                start = dates.start
-                                end = dates.end
-                            }
-                        } label: {
-                            HStack {
-                                Text("This month")
-                                    .foregroundStyle(.black)
-                                    .padding()
-                                Image(systemName: "arrow.right")
-                                    .foregroundStyle(.white)
-                                    .padding([.trailing])
-                            }
-                            .background {
-                                GeometryReader { geo in
-                                    RoundedRectangle(cornerRadius: .myCornerRadius)
-                                        .foregroundStyle(Color(.primary))
-                                        .opacity(0.75)
-
-                                    Rectangle()
-                                        .foregroundStyle(colorScheme == .light ? .black : .white)
-                                        .offset(x: geo.size.width - .myLarge1)
-                                        .clipShape(
-                                            .rect(
-                                                topLeadingRadius: 0,
-                                                bottomLeadingRadius: 0,
-                                                bottomTrailingRadius: .myCornerRadius,
-                                                topTrailingRadius: .myCornerRadius
-                                            )
-                                        )
-                                }
-                            }
-                        }
-                        .shadow(radius: 5)
+                    .onAppear {
+                        datesToThisWeek()
                     }
                 }
-                .padding([.bottom])
-            }
-            .padding()
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            dismiss()
+                        } label: {
+                            ZStack {
+                                Circle()
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .frame(width: .myLarge1)
+
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.gray)
+                            }
+                        }
+                    }
+                }
             .onAppear {
-                datesToThisWeek()
+                Purchases.shared.getOfferings { offerings, error in
+                    if let offer = offerings?.current, error == nil {
+                        currentOffering = offer
+                    }
+                }
             }
+            .onChange(of: notifications) { _, newValue in
+                if newValue {
+                    notificationDate = Date.now.timeIntervalSinceReferenceDate
+                    notificationInterval = .weekly
+                    handleNotificationPermissions()
+                } else {
+                    cancelNotifications()
+                }
+            }
+            .onChange(of: notificationDate) { _, newValue in
+                cancelNotifications()
+                updateNotifications()
+            }
+            .onChange(of: notificationInterval) { _, newValue in
+                cancelNotifications()
+                updateNotifications()
+            }
+        }
+    }
+
+    private func cancelNotifications() {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+
+    private func handleNotificationPermissions() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                updateNotifications()
+            } else if let error {
+                print("Error: We got no permissions for notifications \n \(String(describing: error))")
+            }
+        }
+    }
+
+    private func updateNotifications() {
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "Expenses Reminder", table: .localizable)
+        content.subtitle = String(localized: "Tap here to track your expenses and achieve your saving goal!", table: .localizable)
+        content.sound = .default
+        
+        guard let notificationTriggerDateComponents = notificationDateComponents() else {
+            print("No notification was added")
+            return
+        }
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: notificationTriggerDateComponents, repeats: true)
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request)
+        print("Notification was added")
+
+    }
+
+    private func notificationDateComponents() -> DateComponents? {
+        let notificationTriggerDate = Date(timeIntervalSinceReferenceDate: notificationDate)
+
+        switch notificationInterval {
+        case .daily:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .day, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.hour, .minute], from: nextTriggerDate)
+        case .weekly:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.day, .hour, .minute], from: nextTriggerDate)
+        case .monthly:
+            guard let nextTriggerDate = Calendar.current.date(byAdding: .month, value: 1, to: notificationTriggerDate) else {
+                return nil
+            }
+            return Calendar.current.dateComponents([.weekOfYear, .day, .hour, .minute], from: nextTriggerDate)
         }
     }
 
@@ -654,7 +976,11 @@ struct SettingsView: View {
     private func generateCSV(for expenses: [Expense]) -> URL {
         var fileURL: URL!
         // heading of CSV file.
-        let heading = "Name, Date, Amount, Category\n"
+        let name = String(localized: "Name", table: .localizable)
+        let date = String(localized: "Date", table: .localizable)
+        let amount = String(localized: "Amount", table: .localizable)
+        let category = String(localized: "Category", table: .localizable)
+        let heading = "\(name), \(date), \(amount), \(category)\n"
         // file rows
         let rows = expenses.map { "\($0.name),\($0.timestamp),\($0.amount), \($0.category?.name ?? "n.a.")" }
 
@@ -765,7 +1091,7 @@ struct ChartView: View {
 
     private var unit: Calendar.Component = .hour
 
-    init(filter: Predicate<Expense> = #Predicate { _ in true}, sort: SortDescriptor<Expense>, specialDate: Binding<SpecialDate>) {
+    init(filter: Predicate<Expense>, sort: SortDescriptor<Expense>, specialDate: Binding<SpecialDate>) {
         _expenses = Query(filter: filter, sort: [sort])
         _specialDate = specialDate
     }
@@ -806,21 +1132,21 @@ struct ChartView: View {
 
     private func chart(_ aggregatedExpenses: [AggregatedExpense]) -> some View {
         Chart(aggregatedExpenses) {
-            AreaMark(x: .value("Date", $0.timestamp), y:
-                    .value("Amount", $0.amount))
+            AreaMark(x: .value(String(localized: "Date", table: .localizable), $0.timestamp), y:
+                    .value(String(localized: "Amount", table: .localizable), $0.amount))
             .interpolationMethod(.monotone)
             .foregroundStyle(colorScheme == .light ? lightGradient : darkGradient)
 
             if case .month = specialDate.type {
                 LineMark(
-                    x: .value("Date", $0.timestamp),
-                    y: .value("Amount", $0.amount)
+                    x: .value(String(localized: "Date", table: .localizable), $0.timestamp),
+                    y: .value(String(localized: "Amount", table: .localizable), $0.amount)
                 )
                 .interpolationMethod(.monotone)
             } else {
                 LineMark(
-                    x: .value("Date", $0.timestamp),
-                    y: .value("Amount", $0.amount)
+                    x: .value(String(localized: "Date", table: .localizable), $0.timestamp),
+                    y: .value(String(localized: "Amount", table: .localizable), $0.amount)
                 )
                 .interpolationMethod(.monotone)
                 .symbol(.circle)
@@ -828,7 +1154,7 @@ struct ChartView: View {
 
 
             if let selectedExpense {
-                RectangleMark(x: .value("Unit", selectedExpense, unit: unit))
+                RectangleMark(x: .value(String(localized: "Unit", table: .localizable), selectedExpense, unit: unit))
                     .foregroundStyle(.primary.opacity(0.2))
                     .annotation(position: .trailing, spacing: 0, overflowResolution: .init(x: .fit(to: .chart))) {
                         VStack {
@@ -1019,7 +1345,7 @@ struct MainView: View {
     @State var editExpense: Expense? = nil
 
     @State var name: String = ""
-    @State var amount: String = ""
+    @State var amount: Double?
     @State var date: Date = Date()
     @State var category: ExpenseCategory?
 
@@ -1028,8 +1354,9 @@ struct MainView: View {
     @State var specialDate = SpecialDate(date: Date(), type: .week)
     @State var showAddView: Bool = false
     @State var showDataView: Bool = true
-    @FocusState var isNameFocused:Bool
-    @State var showSettings: Bool = true
+    @FocusState var isNameFocused: Bool
+    @FocusState var isAmountFocused: Bool
+    @State var showSettings: Bool = false
 
     enum Page {
         case list
@@ -1052,14 +1379,14 @@ struct MainView: View {
                     cancelButton()
                 } else {
                     Menu {
-                        Picker("Sort", selection: $sortOrder) {
-                            Text("Name")
+                        Picker(String(localized: "Sort", table: .localizable), selection: $sortOrder) {
+                            Text("Name", tableName: .localizable)
                                 .tag(SortDescriptor(\Expense.name))
 
-                            Text("Date")
+                            Text("Date", tableName: .localizable)
                                 .tag(SortDescriptor(\Expense.timestamp, order: .reverse))
 
-                            Text("Amount")
+                            Text("Amount", tableName: "Localizable")
                                 .tag(SortDescriptor(\Expense.amount))
                         }
                         .pickerStyle(.inline)
@@ -1087,6 +1414,7 @@ struct MainView: View {
                     Button {
                         withAnimation {
                             showAddView = true
+                            isNameFocused = true
                             reset()
                         }
                     } label: {
@@ -1121,10 +1449,10 @@ struct MainView: View {
             formatter.locale = .current
             formatter.maximumFractionDigits = 2
 
-            guard let editExpense, let amountString = formatter.string(from: editExpense.amount as NSNumber) else { return }
+            guard let editExpense else { return }
 
             self.name = editExpense.name
-            self.amount = amountString
+            self.amount = editExpense.amount
             self.date = editExpense.timestamp
             self.category = editExpense.category
 
@@ -1136,8 +1464,25 @@ struct MainView: View {
             }
         }
         .onChange(of: isNameFocused) {
-            withAnimation(.snappy) {
-                showDataView.toggle()
+            if isNameFocused || isAmountFocused {
+                withAnimation(.snappy) {
+                    showDataView = false
+                }
+            } else {
+                withAnimation(.snappy) {
+                    showDataView = true
+                }
+            }
+        }
+        .onChange(of: isAmountFocused) {
+            if isNameFocused || isAmountFocused {
+                withAnimation(.snappy) {
+                    showDataView = false
+                }
+            } else {
+                withAnimation(.snappy) {
+                    showDataView = true
+                }
             }
         }
         .sheet(isPresented: $showSettings) {
@@ -1147,7 +1492,7 @@ struct MainView: View {
 
     private func reset() {
         self.name = ""
-        self.amount = ""
+        self.amount = nil
         self.date = Date()
         self.category = nil
     }
@@ -1192,7 +1537,7 @@ struct MainView: View {
     }
 
     private func addItem() {
-        guard let amount = K.stringToDoubleFormatter.number(from: amount)?.doubleValue else {
+        guard let amount else {
             print("Amount failed")
             return
         }
@@ -1250,7 +1595,7 @@ struct MainView: View {
 
     private func welcomeView() -> some View {
         HStack {
-            Text("Welcome 👋")
+            Text("Welcome 👋", tableName: .localizable)
                 .font(.title)
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 .padding()
@@ -1299,7 +1644,7 @@ struct MainView: View {
                     .padding([.trailing])
                     .frame(width: .myLarge2)
 
-                TextField("Name", text: $name)
+                TextField(String(localized: "Name", table: .localizable), text: $name)
                     .padding(10.0)
                     .background {
                         RoundedRectangle(cornerRadius: .myCornerRadius/2)
@@ -1314,16 +1659,18 @@ struct MainView: View {
                 Image(systemName: "creditcard")
                     .padding([.trailing])
                     .frame(width: .myLarge2)
-
-                TextField("Amount", text: $amount)
+                
+                TextField(String(localized: "Amount", table: .localizable), value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                    .keyboardType(.decimalPad)
                     .padding(10.0)
                     .background {
                         RoundedRectangle(cornerRadius: .myCornerRadius/2)
                             .foregroundStyle(Color(.lightGray))
                             .opacity(0.25)
                     }
-                    .focused($isNameFocused)
+                    .focused($isAmountFocused)
                     .submitLabel(.done)
+
             }
             .padding([.bottom], 5.0)
 
@@ -1332,7 +1679,7 @@ struct MainView: View {
                     .padding([.trailing])
                     .frame(width: .myLarge2)
 
-                DatePicker("Date:", selection: $date)
+                DatePicker(String(localized: "Date", table: .localizable), selection: $date)
                     .labelsHidden()
                     .tint(.purple)
                     .alignmentGuide(.imageTitleAlignmentGuide) { context in
@@ -1350,7 +1697,7 @@ struct MainView: View {
 
 
                 Picker(selection: $category, label: Text("Choose")) {
-                    Text("None")
+                    Text(String(localized: "None", table: .localizable))
                         .tag(nil as ExpenseCategory?)
 
                     ForEach(categories, id: \.self) { category in
@@ -1359,6 +1706,20 @@ struct MainView: View {
                     }
                 }.tint(colorScheme == .light ? .black : .white)
                     .padding(.horizontal, -10)
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+
+                    Button(String(localized: "Done", table: .localizable)) {
+                        if isAmountFocused {
+                            isAmountFocused = false
+                        } else if isNameFocused {
+                            isNameFocused = false
+                        }
+
+                    }
+                }
             }
         }
         .padding([.leading, .trailing, .top])
@@ -1375,6 +1736,9 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    @StateObject var userViewModel = UserViewModel()
+
+    return MainView()
         .modelContainer(previewConstantContainer)
+        .environmentObject(userViewModel)
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import EmojiPicker
 
 enum ExpensesSchemaV1: VersionedSchema {
     static var versionIdentifier = Schema.Version(1, 0, 0)
@@ -55,6 +56,8 @@ enum ExpensesSchemaV2: VersionedSchema {
     final class ExpenseCategory {
         @Attribute(.unique) var name: String
         var symbol: String
+
+        @Relationship(deleteRule: .nullify, inverse: \Expense.category) var expenses = [Expense]()
 
         init(name: String, symbol: String) {
             self.name = name
