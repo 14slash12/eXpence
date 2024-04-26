@@ -56,7 +56,7 @@ struct SimpleEntry: TimelineEntry {
 
 struct eXpenceWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var userViewModel: UserViewModel
+    @StateObject var userViewModel = UserViewModel()
 
     var entry: Provider.Entry
     let specialDate: SpecialDate
