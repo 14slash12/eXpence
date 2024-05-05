@@ -19,6 +19,7 @@ class UserViewModel: ObservableObject {
         if !isPreview {
             Purchases.shared.getCustomerInfo { customerInfo, error in
                 self.isSubscriptionActive = customerInfo?.entitlements.all["Pro"]?.isActive == true
+
             }
         }
     }

@@ -24,7 +24,11 @@ struct eXpenceApp: App {
 
     init() {
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "appl_qEGalBcGAGTVeiEvhEcbFZrDvlc")
+        Purchases.configure(with: 
+            Configuration.Builder(withAPIKey: "appl_qEGalBcGAGTVeiEvhEcbFZrDvlc")
+                    .with(userDefaults: .init(suiteName: "group.com.apperium.Xpenses")!)
+                    .build()
+        )
     }
 }
 

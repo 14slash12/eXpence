@@ -58,6 +58,16 @@
         }
       }
     },
+    "Become a Pro member to unlock widgets" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werde Pro Mitglied um Widgets zu nutzen"
+          }
+        }
+      }
+    },
     "Become Pro for %@" : {
       "localizations" : {
         "de" : {
@@ -501,6 +511,28 @@
         }
       }
     },
+    "Shows the total expenses for this month." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Gesamtausgaben von diesem Monat."
+          }
+        }
+      }
+    },
+    "Shows the total expenses for this week." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Gesamtausgaben von dieser Woche."
+          }
+        }
+      }
+    },
     "Sort" : {
       "localizations" : {
         "de" : {
@@ -573,7 +605,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dieser Monat"
+            "value" : "Aktueller Monat"
           }
         }
       }
@@ -583,7 +615,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Woche"
+            "value" : "Aktuelle Woche"
           }
         }
       }

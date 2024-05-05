@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import SwiftData
 import Charts
+import RevenueCat
 
 struct Provider: TimelineProvider {
     @MainActor
@@ -33,7 +34,7 @@ struct Provider: TimelineProvider {
 //            let entry = SimpleEntry(date: entryDate, expenses: [Expense(name: "Rewe", amount: 20.0, timestamp: Date(), category: nil)])
 //            entries.append(entry)
 //        }
-
+        
         let timeline = Timeline(entries: [SimpleEntry(date: .now, expenses: fetch())], policy: .after(.now.addingTimeInterval(5)))
         completion(timeline)
     }
@@ -56,18 +57,30 @@ struct SimpleEntry: TimelineEntry {
 
 struct eXpenceWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var userViewModel = UserViewModel()
 
     var entry: Provider.Entry
     let specialDate: SpecialDate
 
     var body: some View {
-        VStack {
-            if userViewModel.isSubscriptionActive {
+            if let info = Purchases.shared.cachedCustomerInfo, info.entitlements.all["Pro"]?.isActive == true {
                 sumView()
             } else {
-                Text("Become a Pro member to unlock widgets")
+                ZStack {
+                    Color.white
+
+                    RoundedRectangle(cornerRadius: .myCornerRadius)
+                        .padding()
+                        .shadow(color: .purple, radius: .myCornerRadius)
+
+                    Text("Become a Pro member to unlock widgets")
+                        .padding()
+                        .padding()
+                        .font(.custom("Menlo", size: 12))
+                        .fontDesign(.monospaced)
+                        .foregroundStyle(.white)
+                }
             }
+
 
 //            Chart(aggregateWeekly()) { expense in
 //                LineMark(x: .value("Date", expense.timestamp),
@@ -76,7 +89,6 @@ struct eXpenceWidgetEntryView : View {
 //            ForEach(entry.expenses) { expense in
 //                Text(expense.name)
 //            }
-        }
     }
 
     private var sumText: String {
@@ -101,7 +113,7 @@ struct eXpenceWidgetEntryView : View {
                     colorScheme == .light ? Color.black : Color.white
 
                     VStack(alignment: .leading) {
-                        Text(specialDate.type == .week ? "This week" : "This month")
+                        Text(specialDate.type == .week ? String(localized: "This week", table: .localizable) : String(localized: "This month", table: .localizable))
                             .foregroundStyle(Color(.lightGray))
 
                         Text(sumText)
@@ -145,7 +157,7 @@ struct eXpenceWidgetEntryView : View {
 
         // If the total spending decreased to the last day, week or month depending on what is currently shown to the user (i.e. in specialDate.type)
         var decreasedToLast: RelativeIndicator {
-            let lastExpensesPredicate = filterInterval(from: specialDate.type == .week ? Calendar.current.date(byAdding: .weekOfYear, value: 1, to: Date())! : Calendar.current.date(byAdding: .month, value: 1, to: Date())!, by: specialDate.type)!
+            let lastExpensesPredicate = filterInterval(from: specialDate.type == .week ? Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())! : Calendar.current.date(byAdding: .month, value: -1, to: Date())!, by: specialDate.type)!
             let currentExpensesPredicate = filterInterval(from: .now, by: specialDate.type)!
 
             let lastExpenses = try? entry.expenses.filter(lastExpensesPredicate)
@@ -236,8 +248,8 @@ struct eXpenceWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("Weekly")
-        .description("Shows total weekly expenses.")
+        .configurationDisplayName(String(localized: "This week", table: .localizable))
+        .description(String(localized: "Shows the total expenses for this week.", table: .localizable))
         .contentMarginsDisabled()
     }
 }
@@ -256,8 +268,8 @@ struct eXpenceMonthlyWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("Monthly")
-        .description("Shows total monthly expenses.")
+        .configurationDisplayName(String(localized: "This month", table: .localizable))
+        .description(String(localized: "Shows the total expenses for this month.", table: .localizable))
         .contentMarginsDisabled()
     }
 }

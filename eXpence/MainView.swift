@@ -277,7 +277,7 @@ struct DateAdjustView: View {
                         .foregroundStyle(Color(.tertiary))
                         .opacity(0.25)
                         .frame(width: .myLarge1, height: .myLarge1)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .shadow(radius: 10)
                     Image(systemName: "arrow.left")
                 }
             }
@@ -305,7 +305,7 @@ struct DateAdjustView: View {
                         .foregroundStyle(Color(.tertiary))
                         .opacity(0.25)
                         .frame(width: .myLarge1, height: .myLarge1)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .shadow(radius: 10)
                     Image(systemName: "arrow.right")
                 }
             }
@@ -365,6 +365,7 @@ struct CategoryView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     let category: ExpenseCategory?
+    @AppStorage("mystore") var mystore: Bool = false
 
     private var editorTitle: String {
         category == nil ? String(localized: "Add Category", table: .localizable) : String(localized: "Edit Category", table: .localizable)
@@ -465,6 +466,8 @@ struct SettingsView: View {
 
     @AppStorage("notificationInterval") var notificationInterval: NotificationInterval = .weekly
 
+    @AppStorage("mystore") var mystore: Bool = false
+
     enum NotificationInterval: String, Hashable {
         case daily
         case weekly
@@ -547,7 +550,6 @@ struct SettingsView: View {
                                                     .foregroundStyle(Color(.primary))
                                             }
                                         Text("Support solo project for even more future pro features. Thank you!", tableName: .localizable)
-                                            .frame(height: .myLarge1)
 
                                     }
                                 }
@@ -889,6 +891,13 @@ struct SettingsView: View {
             .onChange(of: notificationInterval) { _, newValue in
                 cancelNotifications()
                 updateNotifications()
+            }
+            .onChange(of: userViewModel.isSubscriptionActive) { _, newValue in
+                mystore = newValue
+            }
+            .onAppear {
+                mystore = userViewModel.isSubscriptionActive
+                print(mystore)
             }
         }
     }
@@ -1609,7 +1618,7 @@ struct MainView: View {
                         .foregroundStyle(Color(.tertiary))
                         .opacity(0.25)
                         .frame(width: .myLarge1, height: .myLarge1)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .shadow(radius: 10)
                     Image(systemName: "gear")
                 }
             }
